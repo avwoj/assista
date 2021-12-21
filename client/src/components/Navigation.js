@@ -10,7 +10,7 @@ function Navigation() {
           <Link to="/">Home</Link>
         </li>
         <li>
-          <Link to="/user/calendar">User Calendar Page</Link>
+          <Link to="/user">User Page</Link>
         </li>
       </ul>
     </div>
