@@ -1,4 +1,5 @@
 import React from "react";
+import Login from "../components/Login";
 
 function Home() {
   return (
@@ -7,6 +8,7 @@ function Home() {
         This will be the home page! Include sign in/registration components
         here.
       </h3>
+      <Login />
     </div>
   );
 }
