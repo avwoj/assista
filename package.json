@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/echase03/assista/issues"
   },
-  "homepage": "https://github.com/echase03/assista#readme"
+  "homepage": "https://github.com/echase03/assista#readme",
+  "dependencies": {
+    "concurrently": "^6.5.1"
+  }
 }
