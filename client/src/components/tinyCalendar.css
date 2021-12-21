@@ -11,7 +11,7 @@ abbr {
 div.react-calendar {
 border-radius: 2%;
 border: darkgrey solid 2px;
-max-width: 250px;
+max-width: 260px;
 }
 
 .react-calendar__navigation {
@@ -25,7 +25,15 @@ max-width: 250px;
   text-decoration: underline;
 }
 
-.react-calendar__navigation__label__labelText {
-  font-size: 16px;
+button.react-calendar__navigation__arrow {
+padding: 0
+}
+
+.react-calendar__navigation__label__labelText, .react-calendar__navigation__label__labelText--from{
+  font-size: 14px;
   font-weight: bold;
+}
+
+.react-calendar__tile, .react-calendar__month-view__days__day, .react-calendar__month-view__days__day--weekend {
+  padding: 5px;
 }

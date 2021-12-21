@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import Registration from "../components/Registration"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "./login.css";
+import TinyCalendar from "./TinyCalendar";
 
 
 
@@ -61,6 +62,7 @@ function Login() {
         </Button>
       </Form>
       <Button className="register_button" size="sm" variant="outline-primary" onClick={() => {handleClick()}}>Register</Button>
+      <TinyCalendar/>
       </div>
       }
       </div>
