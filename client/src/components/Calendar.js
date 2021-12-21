@@ -1,19 +1,42 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
+import FullCalendar, { formatDate } from "@fullcalendar/react"; //must go before plugins
+import dayGridPlugin from "@fullcalendar/daygrid"; //plugins
+import interactionPlugin from "@fullcalendar/interaction";
 
 function Calendar() {
+  let str = formatDate(new Date(), {
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+  });
+
+  const handleDateSelect = (selectInfo) => {
+    let title = prompt("Please enter a new title for your event");
+    let calendarApi = selectInfo.view.calendar;
+
+    calendarApi.unselect(); // clear date selection
+
+    if (title) {
+      calendarApi.addEvent({
+        // id: createEventId(),
+        title,
+        start: selectInfo.startStr,
+        end: selectInfo.endStr,
+        allDay: selectInfo.allDay,
+      });
+    }
+  };
+
+  console.log(str);
   const [title, setTitle] = useState("");
   return (
     <div>
-      <h3>Calendar will go here</h3>
-      <Button
-        onClick={() => {
-          setTitle("hello");
-          console.log(title);
-        }}
-      >
-        Change Title
-      </Button>
+      <FullCalendar
+        plugins={[dayGridPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        selectable={true}
+        select={handleDateSelect}
+      />
     </div>
   );
 }
