@@ -62,7 +62,6 @@ function Login() {
         </Button>
       </Form>
       <Button className="register_button" size="sm" variant="outline-primary" onClick={() => {handleClick()}}>Register</Button>
-      <TinyCalendar/>
       </div>
       }
       </div>
