@@ -7,4 +7,11 @@
     margin: 0 auto;
     max-width: 320px;
   }
+
+  .error {
+    color: red;
+  }
+
+  .registerBack {
+  }
 }
