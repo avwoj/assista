@@ -8,6 +8,8 @@ function Navigation() {
       <h3>Navigation</h3>
           <Link to="/">Home</Link>
           <Link to="/user">User Page</Link>
+          <Link to="/calendar">Calendar</Link>
+          <Link to="/journal">Journal</Link>
     </div>
   );
 }
