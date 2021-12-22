@@ -4,6 +4,8 @@ import dayGridPlugin from "@fullcalendar/daygrid"; //plugins
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
+// https://fullcalendar.io/docs#toc
+
 function Calendar() {
   let str = formatDate(new Date(), {
     month: "long",
