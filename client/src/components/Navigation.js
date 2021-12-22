@@ -12,6 +12,12 @@ function Navigation() {
         <li>
           <Link to="/user">User Page</Link>
         </li>
+        <li>
+          <Link to="/calendar">Calendar</Link>
+        </li>
+        <li>
+          <Link to="/journal">Journal</Link>
+        </li>
       </ul>
     </div>
   );
