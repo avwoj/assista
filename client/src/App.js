@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Calendar from "./components/Calendar";
 import Journal from "./components/Journal";
+import Login from "./components/Login"
+
 
 function App() {
   return (
