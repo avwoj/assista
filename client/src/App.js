@@ -5,21 +5,21 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Calendar from "./components/Calendar";
 import Journal from "./components/Journal";
-import Login from "./components/Login"
 
 
 function App() {
   return (
     <div className="App">
-      <h1>App</h1>
-      <Navigation />
+      <Navigation/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/user" element={<User />} />
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/journal" element={<Journal />} />
       </Routes>
+
     </div>
+    
   );
 }
 

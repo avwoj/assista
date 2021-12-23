@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button } from "react-bootstrap";
-import Registration from "../components/Registration";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Form, Button, Spinner, Container } from "react-bootstrap";
+import Registration from "../components/Registration"
+import 'bootstrap/dist/css/bootstrap.min.css'
 import "./login.css";
 import TinyCalendar from "./TinyCalendar";
 
@@ -20,55 +20,55 @@ function Login() {
   }
 
   function handleClick() {
-    setIsRegisterButtonClicked(true);
+    setIsRegisterButtonClicked(!isRegisterButtonClicked)
   }
 
   return (
     <div className="Login">
-      {isRegisterButtonClicked ? (
-        <Registration />
-      ) : (
-        <div>
-          <Form.Label>Welcome</Form.Label>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="email">
-              <Form.Control
-                placeholder="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group size="lg" controlId="password">
-              <Form.Control
-                placeholder="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </Form.Group>
-            <Button
-              className="login_button"
-              size="md"
-              type="submit"
-              disabled={!validateForm()}
-            >
-              Login
-            </Button>
-          </Form>
-          <Button
-            className="register_button"
-            size="sm"
-            variant="outline-primary"
-            onClick={() => {
-              handleClick();
-            }}
-          >
-            Register
-          </Button>
-        </div>
-      )}
-    </div>
+      {isRegisterButtonClicked ? 
+      <Container>
+      <Registration />
+        <Button variant="primary" disabled>
+        <Spinner
+          as="span"
+          animation="grow"
+          size="sm"
+          role="status"
+          aria-hidden="true"
+        />
+        {" "}Loading...
+      </Button>
+      </Container>
+
+        :
+        <div className="welcome">
+        <h1>Welcome</h1>
+        <Form onSubmit={handleSubmit}>
+        <Form.Group size="lg" controlId="email">
+          <Form.Control
+            placeholder="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)
+            }
+          />
+        </Form.Group>
+        <Form.Group size="lg" controlId="password">
+          <Form.Control
+          placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Form.Group>
+        <Button className="login_button" size="md" type="submit" disabled={!validateForm()}>
+          Login
+        </Button>
+      </Form>
+      <Button className="register_button" size="sm" variant="outline-primary" onClick={() => {handleClick()}}>Register</Button>
+      </div>
+      }
+      </div>
   );
 }
 
