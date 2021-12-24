@@ -67,8 +67,8 @@ const Journal = (props) => {
             </Button>
           </Form.Group>
         </Form.Group>
-        <TinyCalendar />
-      </Form>
+      </Form> 
+      <TinyCalendar />
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>

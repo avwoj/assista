@@ -9,6 +9,7 @@ abbr {
 }
 
 div.react-calendar {
+height: fit-content;
 border-radius: 2%;
 border: darkgrey solid 2px;
 max-width: 260px;
