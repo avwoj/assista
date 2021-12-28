@@ -1,4 +1,4 @@
-@media all and (min-width: 480px) {
+@media all and (min-width: 600px) {
   .Registration {
     padding: 0;
   }
@@ -12,6 +12,4 @@
     color: red;
   }
 
-  .registerBack {
-  }
 }

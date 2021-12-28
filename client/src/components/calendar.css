@@ -1,0 +1,58 @@
+.fc-today-button.fc-button.fc-button-primary {
+    margin: 1px;
+}
+
+.fc-toolbar-chunk {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.fc .fc-toolbar {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+    display: flex;
+    width: 83vw;
+    padding: 10px;
+}
+
+.fullCalendar {
+    display: flex;
+    margin: 0 15px 0 0;
+}
+
+
+
+@media (max-width: 670px) { 
+    .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
+        display: flex;
+        width: 100vw;
+       
+    }
+    .fc-button {
+        display: flex;
+    }
+
+    .fc .fc-toolbar {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    h2 {
+        display:flex;
+        width:fit-content;
+        flex-basis: initial;
+        white-space: nowrap;
+    }
+
+
+    .nav {
+        height: auto;
+        width: 105vw;
+    }
+
+
+}
+
