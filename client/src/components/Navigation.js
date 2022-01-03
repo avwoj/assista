@@ -10,6 +10,7 @@ function Navigation() {
       {/* <Link to="/user">User Page</Link> */}
       <Link to="/calendar">Calendar</Link>
       <Link to="/journal">Journal</Link>
+      <Link to="/Todo">To-Do List</Link>
     </div>
   );
 }
