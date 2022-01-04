@@ -1,10 +1,10 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Navigation from "./components/Navigation";
+import Navigation from "./components/navigation/Navigation";
 import Home from "./pages/Home";
 import User from "./pages/User";
-import Calendar from "./components/Calendar";
-import Journal from "./components/Journal";
+import Calendar from "./components/calendar/Calendar";
+import Journal from "./components/journal/Journal";
 import TodoList from "./components/Todo";
 
 function App() {

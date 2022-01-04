@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import TinyCalendar from "./TinyCalendar";
+import TinyCalendar from "../tinyCalendar/TinyCalendar";
 // import "./journal.css";
 
 const Journal = (props) => {

@@ -6,7 +6,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { getEvents, createEvent } from "../actions/calendar";
+import { getEvents, createEvent } from "../../actions/calendar";
 import axios from "axios";
 import moment from "moment";
 
