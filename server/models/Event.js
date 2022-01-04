@@ -1,11 +1,19 @@
-// import mongoose from "mongoose";
+import mongoose from "mongoose";
 
-// const EventSchema = mongoose.Schema({
-//   start: Date,
-//   end: Date,
-//   title: String,
-// });
+const EventSchema = mongoose.Schema({
+  title: String,
+  start: Date,
+  startStr: String,
+  end: Date,
+  endStr: String,
+  allDay: Boolean,
+  //   description: String,
+  //   createdAt: {
+  //       type: Date,
+  //       default: new Date(),
+  //   }
+});
 
-// const Event = mongoose.model("Event", EventSchema);
+const Event = mongoose.model("Event", EventSchema);
 
-// module.exports = Event;
+export default Event;
