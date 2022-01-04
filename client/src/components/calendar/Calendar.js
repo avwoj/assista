@@ -6,7 +6,12 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { getEvents, createEvent } from "../../actions/calendar";
+import {
+  getEvents,
+  createEvent,
+  updateEvent,
+  deleteEvent,
+} from "../../actions/calendar";
 import axios from "axios";
 import moment from "moment";
 
@@ -17,9 +22,8 @@ function Calendar() {
   const [showRemoveEvent, setShowRemoveEvent] = useState(false);
   const [title, setTitle] = useState("");
   const [eventInfo, setEventInfo] = useState(null);
+  const [currentId, setCurrentId] = useState("");
   const [event, setEvent] = useState(null);
-  // const [events, setEvents] = useState([]);
-  const [deleteInfo, setDeleteInfo] = useState(null);
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
   const calendarRef = useRef(null);
@@ -35,7 +39,7 @@ function Calendar() {
 
   const handleOpenAddEvent = (selectInfo) => {
     setShowAddEvent(true);
-    console.log(selectInfo);
+    // console.log(selectInfo);
     setEventInfo(selectInfo);
   };
 
@@ -44,59 +48,30 @@ function Calendar() {
   };
   const handleOpenRemoveEvent = (clickInfo) => {
     setShowRemoveEvent(true);
-    setDeleteInfo(clickInfo);
+    setCurrentId(clickInfo.event.extendedProps._id);
   };
 
   const handleDateSelect = () => {
     let calendarApi = eventInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
-
     if (title) {
-      // calendarApi.addEvent({
-      //   title,
-      //   start: eventInfo.start,
-      //   startStr: eventInfo.startStr,
-      //   end: eventInfo.end,
-      //   endStr: eventInfo.endStr,
-      //   allDay: eventInfo.allDay,
-      // });
-      console.log(eventInfo);
-      // setEvent({
-      //   title,
-      //   start: eventInfo.start,
-      //   startStr: eventInfo.startStr,
-      //   end: eventInfo.end,
-      //   endStr: eventInfo.endStr,
-      //   allDay: eventInfo.allDay,
-      // });
+      dispatch(
+        createEvent({
+          title,
+          start: eventInfo.start,
+          startStr: eventInfo.startStr,
+          end: eventInfo.end,
+          endStr: eventInfo.endStr,
+          allDay: eventInfo.allDay,
+        })
+      );
     }
-
-    dispatch(
-      createEvent({
-        title,
-        start: eventInfo.start,
-        startStr: eventInfo.startStr,
-        end: eventInfo.end,
-        endStr: eventInfo.endStr,
-        allDay: eventInfo.allDay,
-      })
-    );
     setTitle("");
   };
 
-  const deleteEvent = () => {
-    deleteInfo.event.remove();
-    handleCloseRemoveEvent();
-  };
-
-  const handleDatesSet = async (data) => {
-    const response = await axios.get(
-      `http://localhost:5000/calendar`
-      // ?start=${data.start}&end=${data.end}
-    );
-    // setEvents(response.data);
-    // console.log(response.data);
-    // dispatch(getEvents());
+  const findEvent = (id) => {
+    let data = events.filter((event) => event._id === id);
+    console.log(data);
   };
 
   return (
@@ -129,7 +104,13 @@ function Calendar() {
           Are you sure you want to remove this event from your calendar?
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={deleteEvent}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              dispatch(deleteEvent(currentId));
+              handleCloseRemoveEvent();
+            }}
+          >
             Yes, remove it
           </Button>
           <Button variant="secondary" onClick={handleCloseRemoveEvent}>
@@ -156,7 +137,20 @@ function Calendar() {
           // initialEvents={events}
           select={handleOpenAddEvent}
           eventClick={handleOpenRemoveEvent}
-          datesSet={(date) => handleDatesSet(date)}
+          eventDrop={(eventDropInfo) => {
+            console.log(eventDropInfo.event);
+            console.log(eventDropInfo.event.extendedProps._id);
+            dispatch(
+              updateEvent(eventDropInfo.event.extendedProps._id, {
+                title: eventDropInfo.event.title,
+                start: eventDropInfo.event.start,
+                startStr: eventDropInfo.event.startStr,
+                end: eventDropInfo.event.end,
+                endStr: eventDropInfo.event.endStr,
+                allDay: eventDropInfo.allDay,
+              })
+            );
+          }}
         />
       </div>
     </>
