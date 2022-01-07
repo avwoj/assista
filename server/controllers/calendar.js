@@ -4,7 +4,7 @@ import Event from "../models/Event.js";
 export const getEvents = async (req, res) => {
   try {
     const events = await Event.find();
-    console.log(events);
+    // console.log(events);
     res.status(200).json(events);
   } catch (error) {
     res.status(404).json({ message: error.message });

@@ -1,6 +1,10 @@
 import { useState } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { createUser } from "../../actions/user";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import "./registration.css";
 
 export default function Registration() {
@@ -14,7 +18,8 @@ export default function Registration() {
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
-  
+
+  const dispatch = useDispatch();
 
   // Handling the name change
   const handleName = (e) => {
@@ -52,6 +57,7 @@ export default function Registration() {
     } else {
       setSubmitted(true);
       setError(false);
+      dispatch(createUser(name, email, password));
     }
   };
 
@@ -86,15 +92,13 @@ export default function Registration() {
     return (
       name.length > 0 &&
       email.length > 0 &&
-      username.length &&
+      // username.length &&
       password.length > 0 &&
       confirmPassword.length > 0
     );
   }
 
-
   return (
-
     <div className="Registration">
       <div className="messages">
         {errorMessage()}
@@ -117,14 +121,14 @@ export default function Registration() {
           value={email}
           type="email"
         />
-
+        {/* 
         <Form.Control
           onChange={handleUsername}
           className="input"
           placeholder="User Name"
           value={username}
           type="text"
-        />
+        /> */}
 
         <Form.Control
           onChange={handlePassword}
@@ -141,6 +145,7 @@ export default function Registration() {
           value={confirmPassword}
           type="password"
         />
+
           <Col>
             <Button
               onClick={handleSubmit}
