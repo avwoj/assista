@@ -1,5 +1,6 @@
 import express from "express";
 import calendarRouter from "./calendar.js";
+import userRouter from "./user.js";
 
 const router = express.Router();
 
@@ -8,5 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.use("/calendar", calendarRouter);
+router.use("/users", userRouter);
 
 export default router;
