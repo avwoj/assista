@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import User from "./pages/User";
 import Calendar from "./components/calendar/Calendar";
 import Journal from "./components/journal/Journal";
-import TodoList from "./components/Todo";
+import TodoList from "./components/todoList/Todo";
 
 function App() {
   return (
