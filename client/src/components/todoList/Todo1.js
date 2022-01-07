@@ -21,7 +21,7 @@ const TodoList = () => {
   return (
     <React.Fragment>
       <div>
-        <h1>To-Do List</h1>
+        <h1>To-Do App</h1>
         <div>
           <form>
             <input
