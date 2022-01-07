@@ -28,7 +28,7 @@ function Login() {
       {isRegisterButtonClicked ? (
         <Container>
           <Registration />
-          <Button variant="primary" disabled>
+          {/* <Button variant="primary" disabled>
             <Spinner
               as="span"
               animation="grow"
@@ -37,7 +37,7 @@ function Login() {
               aria-hidden="true"
             />{" "}
             Loading...
-          </Button>
+          </Button> */}
         </Container>
       ) : (
         <div className="welcome">

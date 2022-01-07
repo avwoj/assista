@@ -13,4 +13,3 @@ export const deleteEvent = (id) => axios.delete(`${url}calendar/${id}`);
 //User API Calls
 export const createUser = (newUser) =>
   axios.post(`${url}users/signup`, newUser);
-
