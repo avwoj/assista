@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, Modal, Dropdown, DropdownButton } from "react-bootstrap";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useDrop } from "react-dnd";
 import DropdownItem from "react-bootstrap/esm/DropdownItem";
 import { Link } from "react-router-dom";
 
@@ -64,10 +65,21 @@ const TodoList = () => {
           <h6>
             <b>{state.show}</b>
           </h6>
+
+          {/* <DragDropContext>
+            <Droppable>
+              <ul>
+                <li>Go shopping</li>
+                <li>Workout</li>
+                <li>Lunch</li>
+                <li>School</li>
+              </ul>
+            </Droppable>
+          </DragDropContext> */}
         </div>
       </div>
     </React.Fragment>
   );
 };
 
-export default TodoList;
+export default TodoList2;
