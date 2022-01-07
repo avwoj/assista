@@ -9,6 +9,8 @@ export const updateEvent = (id, updatedEvent) =>
   axios.patch(`${url}calendar/${id}`, updatedEvent);
 export const deleteEvent = (id) => axios.delete(`${url}calendar/${id}`);
 
+
 //User API Calls
 export const createUser = (newUser) =>
   axios.post(`${url}users/signup`, newUser);
+
