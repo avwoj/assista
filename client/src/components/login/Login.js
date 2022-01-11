@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Form, Button, Spinner, Container } from "react-bootstrap";
+import { Grid, Container, TextField, Button, makeStyles } from "@material-ui/core";
+import { createTheme } from '@material-ui/core/styles';
 import Registration from "../registration/Registration";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./login.css";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 
@@ -23,61 +23,95 @@ function Login() {
     setIsRegisterButtonClicked(!isRegisterButtonClicked);
   }
 
+
+
+  let theme = createTheme({
+    palette: {
+      primary: {
+        main: '#0052cc',
+      },
+      secondary: {
+        main: '#edf2ff',
+      },
+    },
+  });
+
+  theme = createTheme(theme, {
+    palette: {
+      info: {
+        main: theme.palette.secondary.main,
+      },
+    },
+  });
+
   return (
     <div className="Login">
       {isRegisterButtonClicked ? (
         <Container>
           <Registration />
-          {/* <Button variant="primary" disabled>
-            <Spinner
-              as="span"
-              animation="grow"
-              size="sm"
-              role="status"
-              aria-hidden="true"
-            />{" "}
-            Loading...
-          </Button> */}
         </Container>
       ) : (
         <div className="welcome">
           <h1>Welcome</h1>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group size="lg" controlId="email">
-              <Form.Control
+          <form
+          onSubmit={handleSubmit}>
+            <Container className="inputs">
+            <Grid
+            className= "grid"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center"
+            >
+              <TextField
+                size="small"
+                id="outlined-basic"
+                variant="outlined"
                 placeholder="Email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </Form.Group>
-            <Form.Group size="lg" controlId="password">
-              <Form.Control
+              
+              <TextField
+              size="small"
+                id="outlined-basic"
+                variant="outlined"
                 placeholder="Password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </Form.Group>
+            </Grid>
+            </Container>
+            <Grid className= "buttons"
+              direction="column"
+              justifyContent="flex-start"
+              alignItems="center">
             <Button
-              className="login_button"
+            variant="outlined"
+            color="primary"
+              className="button"
               size="md"
               type="submit"
               disabled={!validateForm()}
             >
               Login
             </Button>
-          </Form>
+          
           <Button
-            className="register_button"
+          variant="outlined"
+          color="primary"
+            className="button"
             size="sm"
-            variant="outline-primary"
+            
             onClick={() => {
               handleClick();
             }}
           >
             Register
           </Button>
+          </Grid>
+          </form>
         </div>
       )}
     </div>

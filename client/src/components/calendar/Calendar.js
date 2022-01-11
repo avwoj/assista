@@ -4,8 +4,8 @@ import FullCalendar, { formatDate } from "@fullcalendar/react"; //must go before
 import dayGridPlugin from "@fullcalendar/daygrid"; //plugins
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import { Grid, Button, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import Dialog from '@material-ui/core/Dialog';
 import {
   getEvents,
   createEvent,
@@ -74,52 +74,67 @@ function Calendar() {
     console.log(data);
   };
 
+
   return (
     <>
-      <Modal show={showAddEvent} onHide={handleCloseAddEvent}>
-        <Modal.Header>
-          <Modal.Title>Add Event</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Enter the name of your event.
-          {
-            <input
-              placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          }
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseAddEvent}>
+      <Dialog open={showAddEvent} onClose={handleCloseAddEvent}
+      >
+        <DialogTitle>Add Event</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter the name of your event.
+          </DialogContentText>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </DialogContent>
+        <Grid
+          container
+          className="button"
+          direction="row"
+          justifyContent="center"
+          alignItems="flex-start"
+        >
+          <Button onClick={handleCloseAddEvent}
+          variant="outlined"
+          color="primary">
             Add Event
           </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showRemoveEvent} onHide={handleCloseRemoveEvent}>
-        <Modal.Header>
-          <Modal.Title>Remove Event</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Are you sure you want to remove this event from your calendar?
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              dispatch(deleteEvent(currentId));
-              handleCloseRemoveEvent();
-            }}
-          >
-            Yes, remove it
-          </Button>
-          <Button variant="secondary" onClick={handleCloseRemoveEvent}>
-            No, I want to keep it
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        </Grid>
+      </Dialog>
 
-      <div style={{ position: "relative", zIndex: 0 }}>
+      <Dialog open={showRemoveEvent} onClose={handleCloseRemoveEvent}
+      >
+        <DialogTitle>Remove Event</DialogTitle>
+        <DialogContent>Are you sure you want to remove this event from your calendar?</DialogContent>
+        <Grid
+        container
+        className="buttons"
+        direction="column"
+        justifyContent="flex-start"
+        alignItems="center">
+        <Button
+          onClick={() => {
+            dispatch(deleteEvent(currentId));
+            handleCloseRemoveEvent();
+          }}
+          variant="outlined"
+          color="primary"
+        >
+          Yes, remove it
+        </Button>
+        <Button onClick={handleCloseRemoveEvent}
+        variant="outlined"
+        color="primary"
+        className="modalButton">
+          No, I want to keep it
+        </Button>
+        </Grid>
+      </Dialog>
+
+      <div id="calDiv">
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           ref={calendarRef}
@@ -137,6 +152,7 @@ function Calendar() {
           // initialEvents={events}
           select={handleOpenAddEvent}
           eventClick={handleOpenRemoveEvent}
+          handleWindowResize={true}
           eventDrop={(eventDropInfo) => {
             console.log(eventDropInfo.event);
             console.log(eventDropInfo.event.extendedProps._id);
