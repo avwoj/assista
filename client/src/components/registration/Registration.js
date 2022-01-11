@@ -2,8 +2,13 @@ import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { createUser } from "../../actions/user";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  Grid,
+  Container,
+  TextField,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 
 import "./registration.css";
 
@@ -104,70 +109,87 @@ export default function Registration() {
         {errorMessage()}
         {successMessage()}
       </div>
-      <Form>
-        <Form.Label>Register</Form.Label>
-        <Form.Control
-          onChange={handleName}
-          className="input"
-          placeholder="Name"
-          value={name}
-          type="text"
-        />
+      <div>
+        <h1>Register</h1>
+        <Container className="inputs">
+        <Grid
+          container
+          className="gridReg"
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+          size="small"
+        >
+          <TextField
+            onChange={handleName}
+            className="input"
+            placeholder="Name"
+            value={name}
+            type="text"
+            variant="outlined"
+            size="small"
+          />
 
-        <Form.Control
-          onChange={handleEmail}
-          className="input"
-          placeholder="Email"
-          value={email}
-          type="email"
-        />
-        {/* 
-        <Form.Control
-          onChange={handleUsername}
-          className="input"
-          placeholder="User Name"
-          value={username}
-          type="text"
-        /> */}
+          <TextField
+            onChange={handleEmail}
+            className="input"
+            placeholder="Email"
+            value={email}
+            type="email"
+            variant="outlined"
+            size="small"
+          />
 
-        <Form.Control
-          onChange={handlePassword}
-          className="input"
-          placeholder="Password"
-          value={password}
-          type="password"
-        />
+          <TextField
+            onChange={handlePassword}
+            className="input"
+            placeholder="Password"
+            value={password}
+            type="password"
+            variant="outlined"
+            size="small"
+          />
 
-        <Form.Control
-          onChange={handleConfirmPassword}
-          className="input"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          type="password"
-        />
-
-          <Col>
-            <Button
-              onClick={handleSubmit}
-              className="btn"
-              type="submit"
-              disabled={!validateForm()}
-            >
-              Submit
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              size="sm"
-              onClick={() => {
-                window.location.reload()
-              }}
-              variant="outline-primary"
-            >
-              Cancel
-            </Button>
-          </Col>
-      </Form>
+          <TextField
+            onChange={handleConfirmPassword}
+            className="input"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            type="password"
+            variant="outlined"
+            size="small"
+          />
+        </Grid>
+        </Container>
+        <Grid
+          container
+          className="buttons"
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Button
+          variant="outlined"
+          color="primary"
+            onClick={handleSubmit}
+            className="button"
+            type="submit"
+            disabled={!validateForm()}
+          >
+            Submit
+          </Button>
+          <Button
+          variant="outlined"
+          color="primary"
+            className="button"
+            onClick={() => {
+              window.location.reload();
+            }}
+          >
+            Cancel
+          </Button>
+        </Grid>
+      </div>
     </div>
   );
 }

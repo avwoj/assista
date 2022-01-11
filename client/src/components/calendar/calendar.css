@@ -2,28 +2,6 @@
     margin: 1px;
 }
 
-.fc-toolbar-chunk {
-    display: flex;
-    flex-wrap: nowrap;
-}
-
-.fc .fc-toolbar {
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
-    display: flex;
-    width: 83vw;
-    padding: 10px;
-}
-
-.fullCalendar {
-    display: flex;
-    margin: 0 15px 0 0;
-}
-
-
 
 @media (max-width: 670px) { 
     .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
@@ -47,12 +25,16 @@
         white-space: nowrap;
     }
 
-
     .nav {
+        display: flex;
         height: auto;
-        width: 105vw;
+        width: auto;
     }
 
 
 }
 
+ #calDiv {
+     width: 100%;
+     margin: 0 3px 5px 0;
+ }
