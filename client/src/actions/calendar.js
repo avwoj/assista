@@ -6,18 +6,18 @@ import {
   DELETE,
 } from "../constants/calendar/actionTypes";
 
-export const getEvents = () => async (dispatch) => {
+export const getEvents = (userId) => async (dispatch) => {
   try {
-    const { data } = await api.getEvents();
+    const { data } = await api.getEvents(userId);
     dispatch({ type: FETCH_ALL, payload: data });
   } catch (error) {
     console.log(error);
   }
 };
 
-export const createEvent = (event) => async (dispatch) => {
+export const createEvent = (event, userId) => async (dispatch) => {
   try {
-    const { data } = await api.createEvent(event);
+    const { data } = await api.createEvent(event, userId);
     dispatch({ type: CREATE, payload: data });
   } catch (error) {
     console.log(error);

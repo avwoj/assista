@@ -8,8 +8,8 @@ import {
 
 const router = express.Router();
 
-router.get("/", getEvents);
-router.post("/", createEvent);
+router.get("/:userId", getEvents);
+router.post("/:userId", createEvent);
 router.patch("/:id", updateEvent);
 router.delete("/:id", deleteEvent);
 

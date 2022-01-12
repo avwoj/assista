@@ -4,8 +4,14 @@ import FullCalendar, { formatDate } from "@fullcalendar/react"; //must go before
 import dayGridPlugin from "@fullcalendar/daygrid"; //plugins
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { Grid, Button, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
-import Dialog from '@material-ui/core/Dialog';
+import {
+  Grid,
+  Button,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import Dialog from "@material-ui/core/Dialog";
 import {
   getEvents,
   createEvent,
@@ -26,10 +32,15 @@ function Calendar() {
   const [event, setEvent] = useState(null);
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
+  const authData = useSelector((state) => state.authData);
   const calendarRef = useRef(null);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
   useEffect(() => {
-    dispatch(getEvents());
+    setUser(JSON.parse(localStorage.getItem("profile")));
+
+    dispatch(getEvents(user.result._id));
+    console.log(user);
   }, [dispatch]);
 
   const handleCloseAddEvent = () => {
@@ -63,7 +74,9 @@ function Calendar() {
           end: eventInfo.end,
           endStr: eventInfo.endStr,
           allDay: eventInfo.allDay,
-        })
+          author: user.result._id,
+        }),
+        user.result._id
       );
     }
     setTitle("");
@@ -74,16 +87,12 @@ function Calendar() {
     console.log(data);
   };
 
-
   return (
     <>
-      <Dialog open={showAddEvent} onClose={handleCloseAddEvent}
-      >
+      <Dialog open={showAddEvent} onClose={handleCloseAddEvent}>
         <DialogTitle>Add Event</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Enter the name of your event.
-          </DialogContentText>
+          <DialogContentText>Enter the name of your event.</DialogContentText>
           <input
             placeholder="Title"
             value={title}
@@ -97,40 +106,46 @@ function Calendar() {
           justifyContent="center"
           alignItems="flex-start"
         >
-          <Button onClick={handleCloseAddEvent}
-          variant="outlined"
-          color="primary">
+          <Button
+            onClick={handleCloseAddEvent}
+            variant="outlined"
+            color="primary"
+          >
             Add Event
           </Button>
         </Grid>
       </Dialog>
 
-      <Dialog open={showRemoveEvent} onClose={handleCloseRemoveEvent}
-      >
+      <Dialog open={showRemoveEvent} onClose={handleCloseRemoveEvent}>
         <DialogTitle>Remove Event</DialogTitle>
-        <DialogContent>Are you sure you want to remove this event from your calendar?</DialogContent>
+        <DialogContent>
+          Are you sure you want to remove this event from your calendar?
+        </DialogContent>
         <Grid
-        container
-        className="buttons"
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="center">
-        <Button
-          onClick={() => {
-            dispatch(deleteEvent(currentId));
-            handleCloseRemoveEvent();
-          }}
-          variant="outlined"
-          color="primary"
+          container
+          className="buttons"
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
         >
-          Yes, remove it
-        </Button>
-        <Button onClick={handleCloseRemoveEvent}
-        variant="outlined"
-        color="primary"
-        className="modalButton">
-          No, I want to keep it
-        </Button>
+          <Button
+            onClick={() => {
+              dispatch(deleteEvent(currentId));
+              handleCloseRemoveEvent();
+            }}
+            variant="outlined"
+            color="primary"
+          >
+            Yes, remove it
+          </Button>
+          <Button
+            onClick={handleCloseRemoveEvent}
+            variant="outlined"
+            color="primary"
+            className="modalButton"
+          >
+            No, I want to keep it
+          </Button>
         </Grid>
       </Dialog>
 
@@ -144,6 +159,7 @@ function Calendar() {
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
           initialView="dayGridMonth"
+          contentHeight="90vh"
           events={events}
           editable={true}
           selectable={true}

@@ -9,6 +9,6 @@ router.get("/", (req, res) => {
 });
 
 router.use("/calendar", calendarRouter);
-router.use("/users", userRouter);
+router.use("/user", userRouter);
 
 export default router;

@@ -1,46 +1,60 @@
-import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-export const getUser = async (req, res) => {
+//get a better "secret", look up when tokens should expire, what makes sense for assista
+export const signin = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const existingUser = await User.findOne({ email });
+
+    if (!existingUser)
+      return res.status(404).json({ message: "User doesn't exist." });
+
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      existingUser.password
+    );
+
+    if (!isPasswordCorrect)
+      return res.status(404).json({ message: "Invalid credentials." });
+
+    const token = jwt.sign(
+      { email: existingUser.email, id: existingUser._id },
+      "test",
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({ result: existingUser, token });
   } catch (error) {
-    res.status(404).json({ message: error.message });
+    res.status(500).json({ message: "Something went wrong." });
   }
 };
 
-export const createUser = async (req, res) => {
-  const { name, email, password } = req.body;
+export const signup = async (req, res) => {
+  const { email, password, firstName, lastName, confirmPassword } = req.body;
+  try {
+    const existingUser = await User.findOne({ email });
+    if (existingUser)
+      return res.status(400).json({ message: "User already exists." });
+    //check for password length and complexity
+    if (password !== confirmPassword)
+      return res.status(400).json({ message: "Passwords don't match." });
 
-  if (!password || !email) {
-    return res.status(422).json({ error: "Please add all the fields." });
-  }
-  // if (password.length < 8 || password.length > 20) {
-  //     return res
-  //       .status(401)
-  //       .json({ error: "Please use a password between 8 and 20 characters." });
-  //   }
-  User.findOne({ email }).then((savedUser) => {
-    if (savedUser) {
-      return res
-        .status(422)
-        .json({ error: "An account is already registered with that email." });
-    }
-  });
-  //bcrypt for userpassword would go here, line 33 in auth.js from snippets
-  const user = new User({
-    name,
-    email,
-    password,
-  });
+    const hashedPassword = await bcrypt.hash(password, 12);
 
-  user
-    .save()
-    .then((user) => {
-      res.json({ message: "Saved successfully." });
-    })
-    .catch((error) => {
-      console.log(error);
+    const result = await User.create({
+      email,
+      password: hashedPassword,
+      name: `${firstName} ${lastName}`,
     });
+
+    const token = jwt.sign({ email: result.email, id: result._id }, "test", {
+      expiresIn: "1h",
+    });
+
+    res.status(200).json({ result, token });
+  } catch (error) {
+    res.status(500).json({ message: "Something went wrong." });
+  }
 };
