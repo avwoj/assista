@@ -40,12 +40,6 @@ export default function Registration() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signup(formData, navigate));
-    // if (name === "" || email === "" || password === "") {
-    //   setError(true);
-    // } else {
-    //   setSubmitted(true);
-    //   setError(false);
-    // }
   };
 
   // Showing success message
@@ -179,6 +173,7 @@ export default function Registration() {
           >
             Submit
           </Button>
+
           <Button
             variant="outlined"
             color="primary"

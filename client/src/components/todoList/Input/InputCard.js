@@ -28,6 +28,7 @@ export default function InputCard({ setOpen, listId, type }) {
   const classes = useStyle();
   const { addMoreCard, addMoreList } = useContext(storeApi);
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);
