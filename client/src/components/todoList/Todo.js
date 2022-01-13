@@ -29,7 +29,7 @@ function TodoList() {
   const [backgroundUrl, setBackgroundUrl] = useState("");
   const classes = useStyle();
   const addMoreCard = (title, listId) => {
-    console.log(title, listId);
+    console.log("TEST", title, listId);
 
     const newCardId = uuid();
     const newCard = {
