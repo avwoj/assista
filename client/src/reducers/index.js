@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import users from "./user";
+import auth from "./auth";
 import events from "./calendar";
 
 export default combineReducers({
-  users,
+  auth,
   events,
 });

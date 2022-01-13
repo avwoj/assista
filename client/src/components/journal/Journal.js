@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Grid, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -128,25 +129,14 @@ const Journal = (props) => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <Form
+        <form
           className={classes.form}
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-          <Form.Group>
-            <Form.Group className={classes.topDiv}>
-              <Form.Group className={classes.topHeading}>
-                Gratitude Journal
-              </Form.Group>
-              <Form.Control
-                className={classes.textInput}
-                type="search"
-                placeholder="Search"
-              />
-            </Form.Group>
-            <Form.Group className={classes.textAreaDiv}>
+                <h2>Gratitude Journal</h2>
               <textarea
                 value={value}
                 className={classes.textArea}
@@ -163,43 +153,32 @@ const Journal = (props) => {
                 className={classes.submitBtn}
                 type="submit"
                 onClick={handleShow}
-                variant="none"
               >
                 Submit
               </Button>
-            </Form.Group>
-          </Form.Group>
-        </Form>
+        </form>
         <div className={classes.calendar}>
           {show2 == true ? <TinyCalendar /> : null}
         </div>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>
-              <Form.Text>Journal Entry</Form.Text> <br />
-              <Form.Text
+        <Dialog open={show} onClose={handleClose}>
+          <DialogContent closeButton>
+              <DialogTitle>Journal Entry</DialogTitle> <br />
+              <DialogContentText
                 className="border border-warning bg-secondary"
                 style={{ fontSize: "15px", color: "white" }}
               >
                 {displayTime}
-              </Form.Text>
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="border border-info">
-            <Form.Group className="h5">{value}</Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="outline-secondary" onClick={handleClose}>
+              </DialogContentText>
+          </DialogContent>
+            <Button onClick={handleClose}>
               Close
             </Button>
-            <Button variant="outline-primary" onClick={handleClose}>
+            <Button onClick={handleClose}>
               Save changes
             </Button>
-          </Modal.Footer>
-        </Modal>
+        </Dialog>
         <div className={classes.calendarDiv}>
           <Button
-            variant="none"
             className={classes.calendarBtn}
             onClick={() => {
               setShow2(true);

@@ -1,65 +1,45 @@
 import { useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import { createUser } from "../../actions/user";
-import { Form, Button, Row, Col } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
+import { signup } from "../../actions/auth";
+import {
+  Grid,
+  Container,
+  TextField,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 
 import "./registration.css";
 
+const initialState = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
+
 export default function Registration() {
   // States for registration
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState(initialState);
 
   // States for checking the errors
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // Handling the name change
-  const handleName = (e) => {
-    setName(e.target.value);
-    setSubmitted(false);
-  };
-
-  // Handling the email change
-  const handleEmail = (e) => {
-    setEmail(e.target.value);
-    setSubmitted(false);
-  };
-
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-    setSubmitted(false);
-  };
-
-  // Handling the password change
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-    setSubmitted(false);
-  };
-
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-    setSubmitted(false);
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name === "" || email === "" || password === "") {
-      setError(true);
-    } else {
-      setSubmitted(true);
-      setError(false);
-      dispatch(createUser(name, email, password));
-    }
-    window.location.reload();
+    dispatch(signup(formData, navigate));
   };
 
   // Showing success message
@@ -71,7 +51,7 @@ export default function Registration() {
           display: submitted ? "" : "none",
         }}
       >
-        <h1>User {name} successfully registered!!</h1>
+        <h1>User {formData.firstName} successfully registered!!</h1>
       </div>
     );
   };
@@ -91,11 +71,11 @@ export default function Registration() {
 
   function validateForm() {
     return (
-      name.length > 0 &&
-      email.length > 0 &&
-      // username.length &&
-      password.length > 0 &&
-      confirmPassword.length > 0
+      formData.firstName.length > 0 &&
+      formData.lastName.length > 0 &&
+      formData.email.length > 0 &&
+      formData.password.length > 0 &&
+      formData.confirmPassword.length > 0
     );
   }
 
@@ -105,70 +85,107 @@ export default function Registration() {
         {errorMessage()}
         {successMessage()}
       </div>
-      <Form>
-        <Form.Label>Register</Form.Label>
-        <Form.Control
-          onChange={handleName}
-          className="input"
-          placeholder="Name"
-          value={name}
-          type="text"
-        />
+      <div>
+        <h1>Register</h1>
+        <Container className="inputs">
+          <Grid
+            container
+            spacing={2}
+            className="gridReg"
+            direction="column"
+            justifyContent="flex-start"
+            alignItems="center"
+            size="small"
+          >
+            <TextField
+              onChange={handleChange}
+              className="input"
+              // placeholder="First Name"
+              name="firstName"
+              label="First Name"
+              type="text"
+              variant="outlined"
+              size="small"
+            />
 
-        <Form.Control
-          onChange={handleEmail}
-          className="input"
-          placeholder="Email"
-          value={email}
-          type="email"
-        />
-        {/* 
-        <Form.Control
-          onChange={handleUsername}
-          className="input"
-          placeholder="User Name"
-          value={username}
-          type="text"
-        /> */}
+            <TextField
+              onChange={handleChange}
+              className="input"
+              // placeholder="First Name"
+              name="lastName"
+              label="Last Name"
+              type="text"
+              variant="outlined"
+              size="small"
+            />
 
-        <Form.Control
-          onChange={handlePassword}
-          className="input"
-          placeholder="Password"
-          value={password}
-          type="password"
-        />
+            <TextField
+              onChange={handleChange}
+              className="input"
+              // placeholder="Email"
+              // value={email}
+              name="email"
+              label="Email"
+              type="email"
+              variant="outlined"
+              size="small"
+            />
 
-        <Form.Control
-          onChange={handleConfirmPassword}
-          className="input"
-          placeholder="Confirm Password"
-          value={confirmPassword}
-          type="password"
-        />
+            <TextField
+              onChange={handleChange}
+              className="input"
+              // placeholder="Password"
+              name="password"
+              // value={password}
+              label="Password"
+              type="password"
+              variant="outlined"
+              size="small"
+            />
 
-        <Col>
+            <TextField
+              onChange={handleChange}
+              className="input"
+              // placeholder="Confirm Password"
+              // value={confirmPassword}
+              label="Confirm Password"
+              name="confirmPassword"
+              type="password"
+              variant="outlined"
+              size="small"
+            />
+          </Grid>
+        </Container>
+        <Grid
+          container
+          className="buttons"
+          direction="column"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
           <Button
+            variant="outlined"
+            color="primary"
             onClick={handleSubmit}
-            className="btn"
+            className="button"
             type="submit"
             disabled={!validateForm()}
           >
             Submit
           </Button>
-        </Col>
-        <Col>
+
           <Button
-            size="sm"
+            variant="outlined"
+            color="primary"
+            className="button"
             onClick={() => {
               window.location.reload();
             }}
-            variant="outline-primary"
           >
             Cancel
           </Button>
-        </Col>
-      </Form>
+        </Grid>
+      </div>
     </div>
   );
 }

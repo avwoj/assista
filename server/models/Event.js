@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+const { ObjectId } = mongoose.Schema.Types;
+
 const EventSchema = mongoose.Schema({
   title: String,
   start: Date,
@@ -7,6 +9,10 @@ const EventSchema = mongoose.Schema({
   end: Date,
   endStr: String,
   allDay: Boolean,
+  author: {
+    type: ObjectId,
+    ref: "User",
+  },
   //   description: String,
   //   createdAt: {
   //       type: Date,

@@ -13,19 +13,36 @@
       font-family:Arial, Helvetica, sans-serif;
     }
 
-    button {
-      margin-bottom: 5px;
+    .MuiInputBase-input.MuiOutlinedInput-input {
+      width: 225px;    
     }
 
-    input {
-      width: inherit;
-      margin: 10px 0 10px 0;
+    .button {
+      width: 120px;
     }
 
-    .welcome {
-      width: 300px;
-    }
   
+    .grid {
+      display: flex;
+      justify-content: space-around;
+      height: 110px;
+    }
+
+    .gridReg {
+      display: flex;
+      justify-content: space-around;
+      height: 200px;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      height: 80px;
+    }
+
+    .inputs {
+      margin: 30px 0 10px 0;
+    }
 
   @media (max-width: 670px) {
     .App {
