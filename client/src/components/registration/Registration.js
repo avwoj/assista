@@ -59,6 +59,7 @@ export default function Registration() {
       setError(false);
       dispatch(createUser(name, email, password));
     }
+    window.location.reload();
   };
 
   // Showing success message
@@ -146,27 +147,27 @@ export default function Registration() {
           type="password"
         />
 
-          <Col>
-            <Button
-              onClick={handleSubmit}
-              className="btn"
-              type="submit"
-              disabled={!validateForm()}
-            >
-              Submit
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              size="sm"
-              onClick={() => {
-                window.location.reload()
-              }}
-              variant="outline-primary"
-            >
-              Cancel
-            </Button>
-          </Col>
+        <Col>
+          <Button
+            onClick={handleSubmit}
+            className="btn"
+            type="submit"
+            disabled={!validateForm()}
+          >
+            Submit
+          </Button>
+        </Col>
+        <Col>
+          <Button
+            size="sm"
+            onClick={() => {
+              window.location.reload();
+            }}
+            variant="outline-primary"
+          >
+            Cancel
+          </Button>
+        </Col>
       </Form>
     </div>
   );
