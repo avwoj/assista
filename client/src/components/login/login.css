@@ -1,10 +1,8 @@
 
     .Login {
-      height: 80vh;
       display: flex;
+      width: calc(85vw - 128.48px);     
       text-align: center;
-      flex-basis: auto;
-      justify-self: center;
       padding-top: 60px;
       justify-content: center;
     }
@@ -57,7 +55,8 @@
     display: flex;
     width: auto;
     text-align: center;
-  
+   
+    margin: 60px 0;
     }
 
     h3 {
