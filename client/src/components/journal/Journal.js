@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  Grid,
   Button,
   Dialog,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Paper,
-  Box,
   IconButton,
   Collapse,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
-
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -133,7 +129,7 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const Journal = () => {
+const Journal = (prop) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -143,15 +139,6 @@ const Journal = () => {
   const handleShow = () => {
     setShow(true);
   };
-  /*
-  useEffect(() => {
-    localStorage.setItem("value", JSON.stringify(value))
-  }, [value]);
-  
-  */
-  // useEffect(() => {
-  //   localStorage.setItem("value", JSON.stringify(value));
-  // }, [value]);
 
   let now = new Date();
   let displayTime = `
@@ -160,19 +147,19 @@ const Journal = () => {
     now.getMinutes() <= 9 ? 0 : ""
   }${now.getMinutes()}  ${now.getHours() >= 12 ? "PM" : "AM"}`;
 
-  const handleSubmit = (e) => {
-    setValue(e.target.value);
+  const handleSubmit = () => {
     return displayTime;
   };
 
   const handleRemove = (e) => {
     localStorage.removeItem("value", setValue(e.target.value));
   };
-
   return (
     <React.Fragment>
       <div className={classes.root}>
         <form
+          action=""
+          method="GET"
           className={classes.form}
           onSubmit={(e) => {
             e.preventDefault();
@@ -200,9 +187,10 @@ const Journal = () => {
             Submit
           </Button>
           <Button onClick={handleRemove}>Reset</Button>
-          <Box>
-            <Paper>{value}</Paper>
-          </Box>
+          <div>
+            <div />
+            {value}
+          </div>
         </form>
         <div className={classes.calendar}>
           {show2 === true ? <TinyCalendar /> : null}
@@ -216,7 +204,7 @@ const Journal = () => {
             >
               {displayTime}
             </DialogContentText>
-            <DialogContentText>Value: {value}</DialogContentText>
+            <DialogContentText>{value}</DialogContentText>
           </DialogContent>
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={handleClose}>Save changes</Button>
