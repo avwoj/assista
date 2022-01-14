@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -145,7 +144,6 @@ const Journal = (prop) => {
     setToggle(!toggle);
   };
 
-
   const classes = useStyle();
   const handleClose = () => setShow(false);
   const handleShow = () => {
@@ -184,7 +182,6 @@ const Journal = (prop) => {
     setValue("");
   };
 
-
   return (
     <React.Fragment>
       <div className={classes.root}>
@@ -222,7 +219,6 @@ const Journal = (prop) => {
             <div />
             {value}
           </div>
-
         </form>
         <div className={classes.calendar}>
           {show2 === true ? <TinyCalendar /> : null}
@@ -236,7 +232,6 @@ const Journal = (prop) => {
             >
               {displayTime}
             </DialogContentText>
-
             <DialogContentText>{value}</DialogContentText>
           </DialogContent>
           <Button onClick={handleClose}>Close</Button>
