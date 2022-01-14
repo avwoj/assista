@@ -28,6 +28,10 @@ export default function InputCard({ setOpen, listId, type }) {
   const classes = useStyle();
   const { addMoreCard, addMoreList } = useContext(storeApi);
   const [title, setTitle] = useState("");
+  // //useState({
+  //   title: ..,
+  //model the schema,
+  // })
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);
@@ -38,9 +42,9 @@ export default function InputCard({ setOpen, listId, type }) {
       addMoreCard(title, listId);
       setTitle("");
       setOpen(false);
-      console.log("TITLE", title);
+      // console.log("TITLE", title);
     } else {
-      addMoreList(title, listId);
+      addMoreList(title);
       setTitle("");
       setOpen(false);
     }
@@ -53,7 +57,6 @@ export default function InputCard({ setOpen, listId, type }) {
           <InputBase
             onChange={handleOnChange}
             multiline
-            onBlur={() => setOpen(false)}
             fullWidth
             inputProps={{
               className: classes.input,
