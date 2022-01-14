@@ -39,7 +39,7 @@ function Calendar() {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
 
-    dispatch(getEvents(user.result._id));
+    dispatch(getEvents(user?.result?._id));
     console.log(user);
   }, [dispatch]);
 
@@ -74,7 +74,7 @@ function Calendar() {
           end: eventInfo.end,
           endStr: eventInfo.endStr,
           allDay: eventInfo.allDay,
-          author: user.result._id,
+          author: user?.result?._id,
         }),
         user.result._id
       );

@@ -1,10 +1,5 @@
 import * as api from "../api";
-import {
-  FETCH_ALL,
-  CREATE,
-  UPDATE,
-  DELETE,
-} from "../constants/calendar/actionTypes";
+import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 
 export const getEvents = (userId) => async (dispatch) => {
   try {

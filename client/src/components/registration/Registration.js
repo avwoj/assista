@@ -48,12 +48,6 @@ export default function Registration({isRegisterButtonClicked, setIsRegisterButt
     else {
       setPasswordsMatch(false)
     }
-    // if (name === "" || email === "" || password === "") {
-    //   setError(true);
-    // } else {
-    //   setSubmitted(true);
-    //   setError(false);
-    // }
   };
 
   // Showing success message
@@ -190,6 +184,7 @@ export default function Registration({isRegisterButtonClicked, setIsRegisterButt
           >
             Submit
           </Button>
+
           <Button
             variant="outlined"
             color="primary"

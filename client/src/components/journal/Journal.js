@@ -1,8 +1,19 @@
-import React, { useState } from "react";
-import { Grid, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
 
+import React, { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  IconButton,
+  Collapse,
+} from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
+import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
+import { getJournal, writeJournal } from "../../actions/journal";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -70,6 +81,28 @@ const useStyle = makeStyles((theme) => ({
       boxShadow: "none",
     },
   },
+  calendarX: {
+    marginLeft: "88.5rem",
+    fontFamily: "Cursive",
+    width: "3%",
+    marginTop: "-2.9rem",
+    fontWeight: "bold",
+    borderRadius: "50%",
+    backgroundColor: "#F0F8FF",
+    color: "black",
+    "&:hover": {
+      backgroundColor: "#fff",
+      color: "#3c52b2",
+      borderLeft: "1px solid #f97909",
+      borderTop: "1px solid #5fc4bf",
+      borderRight: "1px solid #804e8f",
+      borderBottom: "1px solid #f97909",
+    },
+    "&:focus": {
+      outline: "none",
+      boxShadow: "none",
+    },
+  },
   calendarDiv: {
     marginLeft: "2rem",
     marginTop: "3.3rem",
@@ -99,15 +132,19 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const Journal = (props) => {
+const Journal = (prop) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const journalEntries = useSelector((state) => state.journalEntries);
+  const dispatch = useDispatch();
 
   const triggerToggle = () => {
     setToggle(!toggle);
   };
+
 
   const classes = useStyle();
   const handleClose = () => setShow(false);
@@ -126,67 +163,104 @@ const Journal = (props) => {
     return displayTime;
   };
 
+  const handleRemove = (e) => {
+    localStorage.removeItem("value", setValue(e.target.value));
+  };
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+
+    dispatch(getJournal(user?.result?._id));
+    console.log(journalEntries);
+  }, [dispatch]);
+
+  const handleJournal = () => {
+    dispatch(
+      writeJournal(
+        { text: value, author: user?.result?._id },
+        user?.result?._id
+      )
+    );
+    setValue("");
+  };
+
+
   return (
     <React.Fragment>
       <div className={classes.root}>
         <form
+          action=""
+          method="GET"
           className={classes.form}
           onSubmit={(e) => {
             e.preventDefault();
             handleSubmit();
           }}
         >
-                <h2>Gratitude Journal</h2>
-              <textarea
-                value={value}
-                className={classes.textArea}
-                onChange={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setValue(e.target.value);
-                }}
-                cols="30"
-                rows="15"
-                placeholder="List three things you're grateful for:"
-              />
-              <Button
-                className={classes.submitBtn}
-                type="submit"
-                onClick={handleShow}
-              >
-                Submit
-              </Button>
+          <h2>Gratitude Journal</h2>
+          <textarea
+            value={value}
+            className={classes.textArea}
+            onChange={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setValue(e.target.value);
+            }}
+            cols="30"
+            rows="15"
+            placeholder="List three things you're grateful for:"
+          />
+          <Button
+            className={classes.submitBtn}
+            type="submit"
+            onClick={handleShow}
+          >
+            Submit
+          </Button>
+          <Button onClick={handleRemove}>Reset</Button>
+          <div>
+            <div />
+            {value}
+          </div>
+
         </form>
         <div className={classes.calendar}>
-          {show2 == true ? <TinyCalendar /> : null}
+          {show2 === true ? <TinyCalendar /> : null}
         </div>
         <Dialog open={show} onClose={handleClose}>
           <DialogContent closeButton>
-              <DialogTitle>Journal Entry</DialogTitle> <br />
-              <DialogContentText
-                className="border border-warning bg-secondary"
-                style={{ fontSize: "15px", color: "white" }}
-              >
-                {displayTime}
-              </DialogContentText>
+            <DialogTitle>Journal Entry</DialogTitle> <br />
+            <DialogContentText
+              className="border border-warning bg-secondary"
+              style={{ fontSize: "15px", color: "white" }}
+            >
+              {displayTime}
+            </DialogContentText>
+
+            <DialogContentText>{value}</DialogContentText>
           </DialogContent>
-            <Button onClick={handleClose}>
-              Close
-            </Button>
-            <Button onClick={handleClose}>
-              Save changes
-            </Button>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Save changes</Button>
         </Dialog>
         <div className={classes.calendarDiv}>
           <Button
             className={classes.calendarBtn}
             onClick={() => {
               setShow2(true);
-              classes.calendarBtn["color"] = "white";
+              // classes.calendarBtn["color"] = "white";
             }}
           >
             Tiny Calendar
           </Button>
+          <Collapse
+            in={show2}
+            className={classes.calendarX}
+            orientation="vertical"
+          >
+            <IconButton onClick={() => setShow2(false)}>
+              <ClearIcon />
+            </IconButton>
+          </Collapse>
         </div>
       </div>
     </React.Fragment>

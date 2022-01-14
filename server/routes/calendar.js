@@ -5,12 +5,13 @@ import {
   deleteEvent,
   updateEvent,
 } from "../controllers/calendar.js";
+import auth from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/:userId", getEvents);
-router.post("/:userId", createEvent);
-router.patch("/:id", updateEvent);
-router.delete("/:id", deleteEvent);
+router.get("/:userId", auth, getEvents);
+router.post("/:userId", auth, createEvent);
+router.patch("/:id", auth, updateEvent);
+router.delete("/:id", auth, deleteEvent);
 
 export default router;
