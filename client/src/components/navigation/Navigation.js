@@ -94,7 +94,7 @@ function Navigation() {
                 </Link>
               </MenuItem>
               <MenuItem icon={<FaBook color="white" bg="blue" />}>
-                <Link to="/journal">Journal</Link>
+                <Link to="/Journal">Journal</Link>
               </MenuItem>
               <MenuItem icon={<FaClipboardList color="white" />}>
                 <Link to="/Todo">To-Do App</Link>

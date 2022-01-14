@@ -1,3 +1,15 @@
+
+.input {
+  height: 52px;
+}
+
+.passwordError {
+  font-size: 20px;
+  font-weight:300;
+  color: rgb(255, 23, 23);
+  margin: 0;
+}
+
 @media all and (min-width: 600px) {
   .Registration {
     padding: 0;
