@@ -1,5 +1,16 @@
-import React, { useState } from "react";
-import { Grid, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import {
+  Grid,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Paper,
+  Box,
+  IconButton,
+} from "@material-ui/core";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
@@ -99,21 +110,25 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const Journal = (props) => {
+const Journal = () => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [toggle, setToggle] = useState(false);
-
-  const triggerToggle = () => {
-    setToggle(!toggle);
-  };
 
   const classes = useStyle();
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
   };
+  /*
+  useEffect(() => {
+    localStorage.setItem("value", JSON.stringify(value))
+  }, [value]);
+  
+  */
+  // useEffect(() => {
+  //   localStorage.setItem("value", JSON.stringify(value));
+  // }, [value]);
 
   let now = new Date();
   let displayTime = `
@@ -122,8 +137,13 @@ const Journal = (props) => {
     now.getMinutes() <= 9 ? 0 : ""
   }${now.getMinutes()}  ${now.getHours() >= 12 ? "PM" : "AM"}`;
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    setValue(e.target.value);
     return displayTime;
+  };
+
+  const handleRemove = (e) => {
+    localStorage.removeItem("value", setValue(e.target.value));
   };
 
   return (
@@ -136,46 +156,47 @@ const Journal = (props) => {
             handleSubmit();
           }}
         >
-                <h2>Gratitude Journal</h2>
-              <textarea
-                value={value}
-                className={classes.textArea}
-                onChange={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setValue(e.target.value);
-                }}
-                cols="30"
-                rows="15"
-                placeholder="List three things you're grateful for:"
-              />
-              <Button
-                className={classes.submitBtn}
-                type="submit"
-                onClick={handleShow}
-              >
-                Submit
-              </Button>
+          <h2>Gratitude Journal</h2>
+          <textarea
+            value={value}
+            className={classes.textArea}
+            onChange={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setValue(e.target.value);
+            }}
+            cols="30"
+            rows="15"
+            placeholder="List three things you're grateful for:"
+          />
+          <Button
+            className={classes.submitBtn}
+            type="submit"
+            onClick={handleShow}
+          >
+            Submit
+          </Button>
+          <Button onClick={handleRemove}>Reset</Button>
+          <Box>
+            <Paper>{value}</Paper>
+          </Box>
         </form>
         <div className={classes.calendar}>
-          {show2 == true ? <TinyCalendar /> : null}
+          {show2 === true ? <TinyCalendar /> : null}
         </div>
         <Dialog open={show} onClose={handleClose}>
           <DialogContent closeButton>
-              <DialogTitle>Journal Entry</DialogTitle> <br />
-              <DialogContentText
-                className="border border-warning bg-secondary"
-                style={{ fontSize: "15px", color: "white" }}
-              >
-                {displayTime}
-              </DialogContentText>
+            <DialogTitle>Journal Entry</DialogTitle> <br />
+            <DialogContentText
+              className="border border-warning bg-secondary"
+              style={{ fontSize: "15px", color: "white" }}
+            >
+              {displayTime}
+            </DialogContentText>
+            <DialogContentText>Value: {value}</DialogContentText>
           </DialogContent>
-            <Button onClick={handleClose}>
-              Close
-            </Button>
-            <Button onClick={handleClose}>
-              Save changes
-            </Button>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose}>Save changes</Button>
         </Dialog>
         <div className={classes.calendarDiv}>
           <Button
@@ -187,6 +208,9 @@ const Journal = (props) => {
           >
             Tiny Calendar
           </Button>
+          <IconButton onClick={() => setShow2(false)}>
+            <ClearIcon />
+          </IconButton>
         </div>
       </div>
     </React.Fragment>
