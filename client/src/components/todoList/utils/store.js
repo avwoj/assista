@@ -9,7 +9,7 @@ const cards = [
   },
   {
     id: "card-3",
-    title: "Finish Cap-Stone Project 🤯",
+    title: "Upload resume video on Tiktok 🎥 ",
   },
   {
     id: "card-4",
@@ -27,15 +27,23 @@ const data = {
     "list-2": {
       id: "list-2",
       title: "IN-PROGRESS",
-      cards: [],
+      cards: [{ id: "card-3", title: "Finish Cap-Stone Project 🤯" }],
     },
     "list-3": {
       id: "list-3",
       title: "COMPLETED",
-      cards: [],
+      cards: [{ id: "card-3", title: "5AM Run 🏃🏽" }],
     },
   },
   listIds: ["list-1", "list-2", "list-3"],
 };
 
+// const dataSchema = {
+//   lists: {
+//     "list-1": {
+//       id: "list-1",
+//       title: "ACTIVE - To Do",
+//       cards: [{ id: "card-3", title: "5AM Run 🏃🏽" }],
+//     },
+//   }
 export default data;

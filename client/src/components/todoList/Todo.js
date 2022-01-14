@@ -48,6 +48,7 @@ function TodoList() {
       },
     };
     setData(newState);
+    console.log("STATE", newState);
   };
 
   const addMoreList = (title) => {
@@ -65,6 +66,7 @@ function TodoList() {
       },
     };
     setData(newState);
+    console.log("STATE", newState);
   };
 
   const updateListTitle = (title, listId) => {
