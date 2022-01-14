@@ -4,19 +4,15 @@ import User from "../models/User.js";
 
 export const getEvents = async (req, res) => {
   const { userId } = req.params;
-  console.log(userId);
+
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+
   try {
-    //get calendar event.findOne for user then get calendar events
     const user = await User.findOne({ _id: userId });
-    console.log(user);
     const events = await Event.find();
-    // console.log(events);
-    console.log(typeof userId);
-    console.log(typeof events[events.length - 1].author);
     const filteredEvents = events.filter(
       (event) => String(event.author) === String(userId)
     );
-    console.log(filteredEvents);
     res.status(200).json(filteredEvents);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -25,6 +21,8 @@ export const getEvents = async (req, res) => {
 
 export const createEvent = async (req, res) => {
   const event = req.body;
+
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
 
   const newEvent = new Event(event);
   try {
@@ -38,6 +36,9 @@ export const createEvent = async (req, res) => {
 export const updateEvent = async (req, res) => {
   const { id: _id } = req.params;
   const event = req.body;
+
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("No event with that id");
   }
@@ -51,6 +52,9 @@ export const updateEvent = async (req, res) => {
 
 export const deleteEvent = async (req, res) => {
   const { id: _id } = req.params;
+
+  if (!req.userId) return res.json({ message: "Unauthenticated" });
+
   console.log(req.params);
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("No event with that id");

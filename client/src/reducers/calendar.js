@@ -1,9 +1,4 @@
-import {
-  FETCH_ALL,
-  CREATE,
-  UPDATE,
-  DELETE,
-} from "../constants/calendar/actionTypes";
+import { FETCH_ALL, CREATE, UPDATE, DELETE } from "../constants/actionTypes";
 
 export default (events = [], action) => {
   switch (action.type) {

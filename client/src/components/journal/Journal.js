@@ -1,8 +1,16 @@
-import React, { useState } from "react";
-import { Grid, Button, Dialog, DialogContent, DialogContentText, DialogTitle } from "@material-ui/core";
-
+import React, { useState, useEffect } from "react";
+import {
+  Grid,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
+import { getJournal, writeJournal } from "../../actions/journal";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -104,6 +112,9 @@ const Journal = (props) => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const journalEntries = useSelector((state) => state.journalEntries);
+  const dispatch = useDispatch();
 
   const triggerToggle = () => {
     setToggle(!toggle);
@@ -126,6 +137,23 @@ const Journal = (props) => {
     return displayTime;
   };
 
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+
+    dispatch(getJournal(user?.result?._id));
+    console.log(journalEntries);
+  }, [dispatch]);
+
+  const handleJournal = () => {
+    dispatch(
+      writeJournal(
+        { text: value, author: user?.result?._id },
+        user?.result?._id
+      )
+    );
+    setValue("");
+  };
+
   return (
     <React.Fragment>
       <div className={classes.root}>
@@ -136,53 +164,49 @@ const Journal = (props) => {
             handleSubmit();
           }}
         >
-                <h2>Gratitude Journal</h2>
-              <textarea
-                value={value}
-                className={classes.textArea}
-                onChange={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  setValue(e.target.value);
-                }}
-                cols="30"
-                rows="15"
-                placeholder="List three things you're grateful for:"
-              />
-              <Button
-                className={classes.submitBtn}
-                type="submit"
-                onClick={handleShow}
-              >
-                Submit
-              </Button>
+          <h2>Gratitude Journal</h2>
+          <textarea
+            value={value}
+            className={classes.textArea}
+            onChange={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setValue(e.target.value);
+            }}
+            cols="30"
+            rows="15"
+            placeholder="List three things you're grateful for:"
+          />
+          <Button
+            className={classes.submitBtn}
+            type="submit"
+            onClick={handleShow}
+          >
+            Submit
+          </Button>
         </form>
         <div className={classes.calendar}>
           {show2 == true ? <TinyCalendar /> : null}
         </div>
         <Dialog open={show} onClose={handleClose}>
           <DialogContent closeButton>
-              <DialogTitle>Journal Entry</DialogTitle> <br />
-              <DialogContentText
-                className="border border-warning bg-secondary"
-                style={{ fontSize: "15px", color: "white" }}
-              >
-                {displayTime}
-              </DialogContentText>
+            <DialogTitle>Journal Entry</DialogTitle> <br />
+            <DialogContentText
+              className="border border-warning bg-secondary"
+              style={{ fontSize: "15px", color: "white" }}
+            >
+              {displayTime}
+            </DialogContentText>
           </DialogContent>
-            <Button onClick={handleClose}>
-              Close
-            </Button>
-            <Button onClick={handleClose}>
-              Save changes
-            </Button>
+          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleJournal}>Save changes</Button>
         </Dialog>
         <div className={classes.calendarDiv}>
           <Button
             className={classes.calendarBtn}
             onClick={() => {
               setShow2(true);
-              classes.calendarBtn["color"] = "white";
+              // classes.calendarBtn["color"] = "white";
             }}
           >
             Tiny Calendar
