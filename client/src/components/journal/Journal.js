@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Button,
@@ -9,8 +10,10 @@ import {
   Collapse,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
+import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
+import { getJournal, writeJournal } from "../../actions/journal";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -133,6 +136,15 @@ const Journal = (prop) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const journalEntries = useSelector((state) => state.journalEntries);
+  const dispatch = useDispatch();
+
+  const triggerToggle = () => {
+    setToggle(!toggle);
+  };
+
 
   const classes = useStyle();
   const handleClose = () => setShow(false);
@@ -154,6 +166,25 @@ const Journal = (prop) => {
   const handleRemove = (e) => {
     localStorage.removeItem("value", setValue(e.target.value));
   };
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem("profile")));
+
+    dispatch(getJournal(user?.result?._id));
+    console.log(journalEntries);
+  }, [dispatch]);
+
+  const handleJournal = () => {
+    dispatch(
+      writeJournal(
+        { text: value, author: user?.result?._id },
+        user?.result?._id
+      )
+    );
+    setValue("");
+  };
+
+
   return (
     <React.Fragment>
       <div className={classes.root}>
@@ -191,6 +222,7 @@ const Journal = (prop) => {
             <div />
             {value}
           </div>
+
         </form>
         <div className={classes.calendar}>
           {show2 === true ? <TinyCalendar /> : null}
@@ -204,6 +236,7 @@ const Journal = (prop) => {
             >
               {displayTime}
             </DialogContentText>
+
             <DialogContentText>{value}</DialogContentText>
           </DialogContent>
           <Button onClick={handleClose}>Close</Button>
@@ -214,7 +247,7 @@ const Journal = (prop) => {
             className={classes.calendarBtn}
             onClick={() => {
               setShow2(true);
-              classes.calendarBtn["color"] = "white";
+              // classes.calendarBtn["color"] = "white";
             }}
           >
             Tiny Calendar

@@ -2,6 +2,15 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: "http://localhost:5000" });
 
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem("profile")) {
+    req.headers.authorization = `Bearer ${
+      JSON.parse(localStorage.getItem("profile")).token
+    }`;
+  }
+  return req;
+});
+
 //Calendar API Calls
 export const getEvents = (userId) => API.get(`/calendar/${userId}`);
 export const createEvent = (newEvent, userId) =>
@@ -11,6 +20,11 @@ export const updateEvent = (id, updatedEvent) =>
 export const deleteEvent = (id) => API.delete(`/calendar/${id}`);
 
 //User API Calls
-
+//need to add password requirements and an update password section
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
+
+//Journal calls
+export const getJournal = (userId) => API.get(`/journal/${userId}`);
+export const writeJournal = (newJournalEntry, userId) =>
+  API.post(`/journal/${userId}`, newJournalEntry);
