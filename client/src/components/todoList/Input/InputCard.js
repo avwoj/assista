@@ -24,11 +24,28 @@ const useStyle = makeStyles((theme) => ({
     margin: theme.spacing(0, 1, 1, 1),
   },
 }));
+
+const initialState = {
+  tasks: {
+    cards: {
+      category: "",
+      id: "",
+      tasks: [
+        {
+          id: "",
+          title: "",
+        },
+      ],
+    },
+  },
+};
+
 export default function InputCard({ setOpen, listId, type }) {
   const classes = useStyle();
   const { addMoreCard, addMoreList } = useContext(storeApi);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
+  const [tasks, setTasks] = useState(initialState);
 
   const handleOnChange = (e) => {
     setTitle(e.target.value);

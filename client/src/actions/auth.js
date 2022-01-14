@@ -1,4 +1,4 @@
-import { AUTH } from "../constants/user/actionTypes";
+import { AUTH } from "../constants/actionTypes";
 import * as api from "../api";
 
 export const signin = (formData, navigate) => async (dispatch) => {
