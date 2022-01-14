@@ -9,6 +9,7 @@ import {
   Paper,
   Box,
   IconButton,
+  Collapse,
 } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 
@@ -68,6 +69,28 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: "#F0F8FF",
     color: "black",
     border: "1px solid #EBECF0",
+    "&:hover": {
+      backgroundColor: "#fff",
+      color: "#3c52b2",
+      borderLeft: "1px solid #f97909",
+      borderTop: "1px solid #5fc4bf",
+      borderRight: "1px solid #804e8f",
+      borderBottom: "1px solid #f97909",
+    },
+    "&:focus": {
+      outline: "none",
+      boxShadow: "none",
+    },
+  },
+  calendarX: {
+    marginLeft: "88.5rem",
+    fontFamily: "Cursive",
+    width: "3%",
+    marginTop: "-2.9rem",
+    fontWeight: "bold",
+    borderRadius: "50%",
+    backgroundColor: "#F0F8FF",
+    color: "black",
     "&:hover": {
       backgroundColor: "#fff",
       color: "#3c52b2",
@@ -208,9 +231,15 @@ const Journal = () => {
           >
             Tiny Calendar
           </Button>
-          <IconButton onClick={() => setShow2(false)}>
-            <ClearIcon />
-          </IconButton>
+          <Collapse
+            in={show2}
+            className={classes.calendarX}
+            orientation="vertical"
+          >
+            <IconButton onClick={() => setShow2(false)}>
+              <ClearIcon />
+            </IconButton>
+          </Collapse>
         </div>
       </div>
     </React.Fragment>
