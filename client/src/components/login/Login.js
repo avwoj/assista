@@ -71,9 +71,7 @@ function Login() {
   return (
     <div className="Login">
       {isRegisterButtonClicked ? (
-        <Container>
-          <Registration />
-        </Container>
+          <Registration isRegisterButtonClicked={isRegisterButtonClicked} setIsRegisterButtonClicked={setIsRegisterButtonClicked}/>
       ) : (
         <div className="welcome">
           <h1>Welcome</h1>
@@ -87,7 +85,6 @@ function Login() {
               >
                 <TextField
                   size="small"
-                  id="outlined-basic"
                   variant="outlined"
                   name="email"
                   label="Email"
@@ -97,7 +94,6 @@ function Login() {
 
                 <TextField
                   size="small"
-                  id="outlined-basic"
                   variant="outlined"
                   name="password"
                   label="Password"

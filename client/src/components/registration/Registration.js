@@ -21,7 +21,7 @@ const initialState = {
   confirmPassword: "",
 };
 
-export default function Registration() {
+export default function Registration({isRegisterButtonClicked, setIsRegisterButtonClicked}) {
   // States for registration
   const [formData, setFormData] = useState(initialState);
 
@@ -29,17 +29,25 @@ export default function Registration() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
 
+  const [passwordsMatch, setPasswordsMatch] = useState(true)
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
+    setPasswordsMatch(true)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   // Handling the form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.password === formData.confirmPassword) {
     dispatch(signup(formData, navigate));
+    }
+    else {
+      setPasswordsMatch(false)
+    }
     // if (name === "" || email === "" || password === "") {
     //   setError(true);
     // } else {
@@ -85,23 +93,24 @@ export default function Registration() {
     );
   }
 
+  function handleClick() {
+    setIsRegisterButtonClicked(!isRegisterButtonClicked);
+  }
+
   return (
     <div className="Registration">
       <div className="messages">
         {errorMessage()}
         {successMessage()}
       </div>
-      <div>
+      <div id="registerDiv">
         <h1>Register</h1>
-        <Container className="inputs">
           <Grid
             container
-            spacing={2}
-            className="gridReg"
+            className="inputs"
             direction="column"
-            justifyContent="flex-start"
+            justifyContent="space-between"
             alignItems="center"
-            size="small"
           >
             <TextField
               onChange={handleChange}
@@ -160,8 +169,10 @@ export default function Registration() {
               variant="outlined"
               size="small"
             />
+            <p className="passwordError">
+        {!passwordsMatch ? ("Passwords Don't Match"):("")}
+        </p>
           </Grid>
-        </Container>
         <Grid
           container
           className="buttons"
@@ -175,7 +186,7 @@ export default function Registration() {
             onClick={handleSubmit}
             className="button"
             type="submit"
-            disabled={!validateForm()}
+            // disabled={!validateForm()}
           >
             Submit
           </Button>
@@ -184,7 +195,7 @@ export default function Registration() {
             color="primary"
             className="button"
             onClick={() => {
-              window.location.reload();
+              handleClick();
             }}
           >
             Cancel
