@@ -41,9 +41,6 @@ const useStyle = makeStyles((theme) => ({
 }));
 function Navigation() {
   const [menuCollapse, setMenuCollapse] = useState(false);
-  const menuIconClick = () => {
-    menuCollapse ? setMenuCollapse(false) : setMenuCollapse(true);
-  };
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const classes = useStyle();
   const dispatch = useDispatch();
@@ -67,27 +64,15 @@ function Navigation() {
 
   return (
     <>
-      {user && (
-        <div className="nav">
-          <ProSidebar collapsed={menuCollapse} className="bg-color: #fff">
-            <SidebarHeader>
-              <h3 style={{ textAlign: "center" }}>
-                Welcome {user.result.name.split(" ")[0]}!
-              </h3>
-            </SidebarHeader>
-            <div onClick={menuIconClick} className="arrow">
-              {menuCollapse ? (
-                <FiArrowRightCircle color="white" />
-              ) : (
-                <FiArrowLeftCircle color="white" />
-              )}
-            </div>
+      <div className="nav">
+        <ProSidebar collapsed={menuCollapse} className="bg-color: #fff">
+          <SidebarHeader>
+            <h3 style={{ textAlign: "center" }}>
+              {user ? `Welcome ${user.result.name.split(" ")[0]}!` : "Assista"}
+            </h3>
+          </SidebarHeader>
+          {user && (
             <Menu iconShape="square" className={classes.icons}>
-              {/* <MenuItem icon={<FaHome color="white" />}>
-                <Link className={classes.root} to="/">
-                  Home
-                </Link>
-              </MenuItem> */}
               <MenuItem color="white" icon={<FaCalendar color="white" />}>
                 <Link className={classes.root} to="/calendar">
                   Calendar
@@ -100,12 +85,15 @@ function Navigation() {
                 <Link to="/Todo">To-Do App</Link>
               </MenuItem>
             </Menu>
+          )}
+          {user && (
             <Button variant="contained" onClick={logout}>
               Log Out
             </Button>
-          </ProSidebar>
-        </div>
-      )}
+          )}
+        </ProSidebar>
+      </div>
+      {/* )} */}
     </>
   );
 }

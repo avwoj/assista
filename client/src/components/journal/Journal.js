@@ -8,6 +8,7 @@ import {
   IconButton,
   Collapse,
 } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
@@ -137,11 +138,12 @@ const Journal = (prop) => {
   const [show2, setShow2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const journalEntries = useSelector((state) => state.journalEntries);
+  const journal = useSelector((state) => state.journal);
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const triggerToggle = () => {
-    setToggle(!toggle);
+    setToggle((prevToggle) => !prevToggle);
   };
 
   const classes = useStyle();
@@ -167,10 +169,10 @@ const Journal = (prop) => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
-
     dispatch(getJournal(user?.result?._id));
-    console.log(journalEntries);
-  }, [dispatch]);
+
+    console.log(journal);
+  }, [dispatch, toggle]);
 
   const handleJournal = () => {
     dispatch(
@@ -214,11 +216,11 @@ const Journal = (prop) => {
           >
             Submit
           </Button>
-          <Button onClick={handleRemove}>Reset</Button>
-          <div>
-            <div />
-            {value}
-          </div>
+          <Button>Reset</Button>
+
+          {journal.map((entry) => {
+            return <div>Journal Entry: {entry.text}</div>;
+          })}
         </form>
         <div className={classes.calendar}>
           {show2 === true ? <TinyCalendar /> : null}
@@ -235,14 +237,13 @@ const Journal = (prop) => {
             <DialogContentText>{value}</DialogContentText>
           </DialogContent>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Save changes</Button>
+          <Button onClick={handleJournal}>Save changes</Button>
         </Dialog>
         <div className={classes.calendarDiv}>
           <Button
             className={classes.calendarBtn}
             onClick={() => {
               setShow2(true);
-              // classes.calendarBtn["color"] = "white";
             }}
           >
             Tiny Calendar

@@ -1,13 +1,15 @@
 import { FETCH_ALL, CREATE } from "../constants/actionTypes";
 
-export default (journalEntries = [], action) => {
+export default (journal = [], action) => {
   switch (action.type) {
     case FETCH_ALL:
+      console.log(action.payload);
+      // return action.payload;
       return action.payload;
     case CREATE:
-      return [...journalEntries, action.payload];
+      return [...journal, action.payload];
 
     default:
-      return journalEntries;
+      return [...journal];
   }
 };
