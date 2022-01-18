@@ -9,14 +9,15 @@ body {
   background-color: rgb(50, 47, 47);
 } */
 
-div.journalEntries {
-  width: calc(100% - 400px);
+.journalEntries {
+  width: calc(100% - 280px);
 }
 
-.makeStyles-form-32 {
-  height: 100vh;
+@media (max-width: 670px) {
+  .journalEntries {
+    width: 100%;
+  }
 }
-
 /* textarea {
   font-size: 20px;
   width: 100%;
