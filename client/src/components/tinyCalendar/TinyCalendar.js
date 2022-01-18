@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 function TinyCalendar({theDate, setTheDate, user,  getJournal}) {
   const [value, setDate] = useState("")
   const dispatch = useDispatch()
+  
   const handleChange = (date) => {
     setDate(date)
     setTheDate(date.toLocaleDateString())

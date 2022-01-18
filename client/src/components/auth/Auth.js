@@ -38,9 +38,11 @@ function Auth() {
       dispatch(signin(formData, navigate));
     }
   };
+  
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
