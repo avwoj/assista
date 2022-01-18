@@ -2,29 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import decode from "jwt-decode";
-import {
-  ProSidebar,
-  Menu,
-  MenuItem,
-  SubMenu,
-  SidebarHeader,
-} from "react-pro-sidebar";
+import { ProSidebar, Menu, MenuItem, SidebarHeader } from "react-pro-sidebar";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  FaCalendar,
-  FaGem,
-  FaHome,
-  FaBook,
-  FaClipboardList,
-} from "react-icons/fa";
-import {
-  FiHome,
-  FiLogOut,
-  FiArrowLeftCircle,
-  FiArrowRightCircle,
-} from "react-icons/fi";
+import { FaCalendar, FaBook, FaClipboardList } from "react-icons/fa";
 import "react-pro-sidebar/dist/css/styles.css";
 import "./navigation.css";
 
@@ -51,10 +33,10 @@ function Navigation() {
     const token = user?.token;
     if (token) {
       const decodedToken = decode(token);
-      if (decodedToken.exp * 1000 < new Date().getDate()) logout();
+      if (decodedToken.exp < new Date() / 1000) logout();
     }
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+  }, [location, dispatch]);
 
   const logout = () => {
     dispatch({ type: "LOGOUT" });

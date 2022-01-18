@@ -172,7 +172,9 @@ const Journal = (prop) => {
     setUser(JSON.parse(localStorage.getItem("profile")));
     dispatch(getJournal(user?.result?._id));
 
-  }, [dispatch, toggle]);
+
+  }, [dispatch]);
+
 
 
   const handleJournal = () => {
