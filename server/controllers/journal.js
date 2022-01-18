@@ -3,25 +3,27 @@ import User from "../models/User.js";
 
 export const getJournal = async (req, res) => {
   const { userId } = req.params;
+  const { date } = req.query
 
   // if (!req.userId) return res.json({ message: "Unauthenticated" });
 
   try {
     const journalEntries = await Journal.find();
-    console.log(journalEntries);
+    // console.log(journalEntries);
     const filteredJournalEntries = journalEntries.filter(
-      (entry) => String(entry.author) === String(userId)
+      date.length > 0 ? (entry) => String(entry.author) === String(userId) && entry.date === date
+      :(entry) => String(entry.author) === String(userId)
     );
-    console.log(filteredJournalEntries);
+    // console.log(filteredJournalEntries);
     res.status(200).json(filteredJournalEntries);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
 export const writeJournal = async (req, res) => {
   const journalEntry = req.body;
   if (!req.userId) return res.json({ message: "Unauthenticated" });
-
   const newJournalEntry = new Journal(journalEntry);
   try {
     await newJournalEntry.save();

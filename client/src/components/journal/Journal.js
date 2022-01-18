@@ -138,6 +138,7 @@ const Journal = (prop) => {
   const [show2, setShow2] = useState(false);
   const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const [theDate, setTheDate] = useState(new Date().toLocaleDateString())
   const journal = useSelector((state) => state.journal);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -171,18 +172,20 @@ const Journal = (prop) => {
     setUser(JSON.parse(localStorage.getItem("profile")));
     dispatch(getJournal(user?.result?._id));
 
-    console.log(journal);
   }, [dispatch, toggle]);
+
 
   const handleJournal = () => {
     dispatch(
       writeJournal(
-        { text: value, author: user?.result?._id },
+        { date: theDate, text: value, author: user?.result?._id },
         user?.result?._id
       )
     );
     setValue("");
+    setShow(false)
   };
+  
 
   return (
     <React.Fragment>
@@ -206,7 +209,7 @@ const Journal = (prop) => {
               setValue(e.target.value);
             }}
             cols="30"
-            rows="15"
+            rows="14"
             placeholder="List three things you're grateful for:"
           />
           <Button
@@ -216,17 +219,18 @@ const Journal = (prop) => {
           >
             Submit
           </Button>
-          <Button>Reset</Button>
+          <Button onClick={(e)=>dispatch(getJournal(user?.result?._id))}>Reset</Button>
 
-          {journal.map((entry) => {
-            return <div>Journal Entry: {entry.text}</div>;
+          {journal.map((entry, index) => {
+            return <div key={entry.text+index}>Journal Entry: {entry.text}</div>;
           })}
         </form>
-        <div className={classes.calendar}>
-          {show2 === true ? <TinyCalendar /> : null}
+        {/* <div className={classes.calendar}> */}
+        <div className="tinyCal">
+          <TinyCalendar theDate={theDate} setTheDate={setTheDate} user={user} getJournal={getJournal}/>
         </div>
         <Dialog open={show} onClose={handleClose}>
-          <DialogContent closeButton>
+          <DialogContent>
             <DialogTitle>Journal Entry</DialogTitle> <br />
             <DialogContentText
               className="border border-warning bg-secondary"
