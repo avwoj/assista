@@ -13,6 +13,51 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+@media only screen and (max-width: 600px) {
+  div.App {
+    width: 60vw;
+  }
+}
+@media only screen and (max-width: 600px) {
+  #divBar {
+    display: flex;
+    padding-bottom: 5%;
+    margin-right: 27px;
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  div#navBar {
+    display: inline-block;
+    margin-bottom: 6px;
+    width: 100%;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .active,
+  .arrow {
+    display: none;
+  }
+}
+@media only screen and (max-width: 600px) {
+  ul {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .pro-sidebar {
+    width: 600px;
+    min-width: 80%;
+    display: flex;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .logoutbtn {
+    width: 100%;
+  }
+}
 
 .App-header {
   background-color: #282c34;

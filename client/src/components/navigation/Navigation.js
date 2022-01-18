@@ -68,7 +68,7 @@ function Navigation() {
   return (
     <>
       {user && (
-        <div className="nav">
+        <div className="nav" id="divBar">
           <ProSidebar collapsed={menuCollapse} className="bg-color: #fff">
             <SidebarHeader>
               <h3 style={{ textAlign: "center" }}>
@@ -77,32 +77,45 @@ function Navigation() {
             </SidebarHeader>
             <div onClick={menuIconClick} className="arrow">
               {menuCollapse ? (
-                <FiArrowRightCircle color="white" />
+                <FiArrowRightCircle color="white" collapsed="true" />
               ) : (
-                <FiArrowLeftCircle color="white" />
+                <FiArrowLeftCircle color="white" collapsed="true" />
               )}
             </div>
-            <Menu iconShape="square" className={classes.icons}>
-              {/* <MenuItem icon={<FaHome color="white" />}>
+            <div id="navBar">
+              <Menu iconShape="square" className={classes.icons}>
+                {/* <MenuItem icon={<FaHome color="white" />}>
                 <Link className={classes.root} to="/">
                   Home
                 </Link>
               </MenuItem> */}
-              <MenuItem color="white" icon={<FaCalendar color="white" />}>
-                <Link className={classes.root} to="/calendar">
-                  Calendar
-                </Link>
-              </MenuItem>
-              <MenuItem icon={<FaBook color="white" bg="blue" />}>
-                <Link to="/Journal">Journal</Link>
-              </MenuItem>
-              <MenuItem icon={<FaClipboardList color="white" />}>
-                <Link to="/Todo">To-Do App</Link>
-              </MenuItem>
-            </Menu>
-            <Button variant="contained" onClick={logout}>
-              Log Out
-            </Button>
+                <MenuItem
+                  color="white"
+                  icon={<FaCalendar color="white" id="icons" />}
+                >
+                  <Link className={classes.root} to="/calendar" id="roots">
+                    Calendar
+                  </Link>
+                </MenuItem>
+                <MenuItem icon={<FaBook color="white" bg="blue" id="icons" />}>
+                  <Link to="/Journal" id="roots">
+                    Journal
+                  </Link>
+                </MenuItem>
+                <MenuItem icon={<FaClipboardList color="white" id="icons" />}>
+                  <Link to="/Todo" id="roots">
+                    To-Do App
+                  </Link>
+                </MenuItem>
+              </Menu>
+              <Button
+                className="logoutbtn"
+                variant="contained"
+                onClick={logout}
+              >
+                Log Out
+              </Button>
+            </div>
           </ProSidebar>
         </div>
       )}
