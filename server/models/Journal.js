@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { ObjectId } = mongoose.Schema.Types;
 
 const JournalSchema = mongoose.Schema({
-  // date: Date,
+  date: String,
   text: String,
   author: {
     type: ObjectId,
