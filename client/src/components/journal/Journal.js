@@ -136,16 +136,11 @@ const Journal = (prop) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const [theDate, setTheDate] = useState(new Date().toLocaleDateString())
+  const [theDate, setTheDate] = useState(new Date().toLocaleDateString());
   const journal = useSelector((state) => state.journal);
   const dispatch = useDispatch();
   const location = useLocation();
-
-  const triggerToggle = () => {
-    setToggle((prevToggle) => !prevToggle);
-  };
 
   const classes = useStyle();
   const handleClose = () => setShow(false);
@@ -171,11 +166,7 @@ const Journal = (prop) => {
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
     dispatch(getJournal(user?.result?._id));
-
-
   }, [dispatch]);
-
-
 
   const handleJournal = () => {
     dispatch(
@@ -185,9 +176,8 @@ const Journal = (prop) => {
       )
     );
     setValue("");
-    setShow(false)
+    setShow(false);
   };
-  
 
   return (
     <React.Fragment>
@@ -221,15 +211,30 @@ const Journal = (prop) => {
           >
             Submit
           </Button>
-          <Button onClick={(e)=>dispatch(getJournal(user?.result?._id))}>Reset</Button>
+          <Button onClick={(e) => dispatch(getJournal(user?.result?._id))}>
+            Reset
+          </Button>
 
-          {journal.map((entry, index) => {
-            return <div key={entry.text+index}>Journal Entry: {entry.text}</div>;
-          })}
+          {journal &&
+            journal.map((entry, index) => {
+              if (entry.date === theDate) {
+                return (
+                  <div className="journalEntries" key={entry.text + index}>
+                    {entry.date} : {entry.text}
+                  </div>
+                );
+              }
+              return null;
+            })}
         </form>
         {/* <div className={classes.calendar}> */}
         <div className="tinyCal">
-          <TinyCalendar theDate={theDate} setTheDate={setTheDate} user={user} getJournal={getJournal}/>
+          <TinyCalendar
+            theDate={theDate}
+            setTheDate={setTheDate}
+            user={user}
+            getJournal={getJournal}
+          />
         </div>
         <Dialog open={show} onClose={handleClose}>
           <DialogContent>
@@ -245,25 +250,6 @@ const Journal = (prop) => {
           <Button onClick={handleClose}>Close</Button>
           <Button onClick={handleJournal}>Save changes</Button>
         </Dialog>
-        <div className={classes.calendarDiv}>
-          <Button
-            className={classes.calendarBtn}
-            onClick={() => {
-              setShow2(true);
-            }}
-          >
-            Tiny Calendar
-          </Button>
-          <Collapse
-            in={show2}
-            className={classes.calendarX}
-            orientation="vertical"
-          >
-            <IconButton onClick={() => setShow2(false)}>
-              <ClearIcon />
-            </IconButton>
-          </Collapse>
-        </div>
       </div>
     </React.Fragment>
   );

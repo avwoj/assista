@@ -3,7 +3,7 @@ import User from "../models/User.js";
 
 export const getJournal = async (req, res) => {
   const { userId } = req.params;
-  const { date } = req.query
+  const { date } = req.query;
 
   // if (!req.userId) return res.json({ message: "Unauthenticated" });
 
@@ -11,10 +11,11 @@ export const getJournal = async (req, res) => {
     const journalEntries = await Journal.find();
     // console.log(journalEntries);
     const filteredJournalEntries = journalEntries.filter(
-      date.length > 0 ? (entry) => String(entry.author) === String(userId) && entry.date === date
-      :(entry) => String(entry.author) === String(userId)
+      date.length > 0
+        ? (entry) =>
+            String(entry.author) === String(userId) && entry.date === date
+        : (entry) => String(entry.author) === String(userId)
     );
-    // console.log(filteredJournalEntries);
     res.status(200).json(filteredJournalEntries);
   } catch (error) {
     res.status(404).json({ message: error.message });

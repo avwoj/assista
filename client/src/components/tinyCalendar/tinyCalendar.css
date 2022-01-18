@@ -8,11 +8,19 @@ abbr {
   top: 540px;
 }
 
+@media (max-width: 670px) {
+  .tiny {
+    position: relative;
+    right: 0px;
+    top: 0px;
+  }
+}
+
 div.react-calendar {
-height: fit-content;
-border-radius: 2%;
-border: darkgrey solid 2px;
-max-width: 260px;
+  height: fit-content;
+  border-radius: 2%;
+  border: darkgrey solid 2px;
+  max-width: 260px;
 }
 
 .react-calendar__navigation {
@@ -27,14 +35,17 @@ max-width: 260px;
 }
 
 button.react-calendar__navigation__arrow {
-padding: 0
+  padding: 0;
 }
 
-.react-calendar__navigation__label__labelText, .react-calendar__navigation__label__labelText--from{
+.react-calendar__navigation__label__labelText,
+.react-calendar__navigation__label__labelText--from {
   font-size: 14px;
   font-weight: bold;
 }
 
-.react-calendar__tile, .react-calendar__month-view__days__day, .react-calendar__month-view__days__day--weekend {
+.react-calendar__tile,
+.react-calendar__month-view__days__day,
+.react-calendar__month-view__days__day--weekend {
   padding: 5px;
 }
