@@ -172,7 +172,7 @@ const Journal = (prop) => {
     dispatch(getJournal(user?.result?._id));
 
     console.log(journal);
-  }, [dispatch, toggle]);
+  }, [dispatch]);
 
   const handleJournal = () => {
     dispatch(
