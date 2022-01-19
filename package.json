@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently --kill-others-on-fail  \"cd server && npm start\" \"cd client && npm run build\" "
+    "start": "concurrently --kill-others-on-fail  \"cd server && npm start\" \"cd client && npm start\" "
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
-    "concurrently": "^6.5.1",
+    "concurrently": "^7.0.0",
     "cors": "^2.8.5",
     "dotenv": "^14.2.0",
     "express": "^4.17.2",
