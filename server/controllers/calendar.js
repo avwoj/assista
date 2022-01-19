@@ -55,7 +55,6 @@ export const deleteEvent = async (req, res) => {
 
   if (!req.userId) return res.json({ message: "Unauthenticated" });
 
-  console.log(req.params);
   if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send("No event with that id");
   }

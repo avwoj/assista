@@ -40,7 +40,6 @@ function Calendar() {
     setUser(JSON.parse(localStorage.getItem("profile")));
 
     dispatch(getEvents(user?.result?._id));
-    console.log(user);
   }, [dispatch]);
 
   const handleCloseAddEvent = () => {
@@ -50,7 +49,6 @@ function Calendar() {
 
   const handleOpenAddEvent = (selectInfo) => {
     setShowAddEvent(true);
-    // console.log(selectInfo);
     setEventInfo(selectInfo);
   };
 
@@ -84,7 +82,6 @@ function Calendar() {
 
   const findEvent = (id) => {
     let data = events.filter((event) => event._id === id);
-    console.log(data);
   };
 
   return (
@@ -170,8 +167,6 @@ function Calendar() {
           eventClick={handleOpenRemoveEvent}
           handleWindowResize={true}
           eventDrop={(eventDropInfo) => {
-            console.log(eventDropInfo.event);
-            console.log(eventDropInfo.event.extendedProps._id);
             dispatch(
               updateEvent(eventDropInfo.event.extendedProps._id, {
                 title: eventDropInfo.event.title,
