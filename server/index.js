@@ -15,21 +15,21 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-const __filename = fileURLToPath(import.meta.url);
+// const __filename = fileURLToPath(import.meta.url);
 
-app.use(express.static(path.join(path.dirname(__filename), "client/build")));
+// app.use(express.static(path.join(path.dirname(__filename), "client/build")));
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(path.dirname(__filename), "client/build")));
-  //
-  app.get("*", (req, res) => {
-    res.sendfile(path.join((path.dirname(__filename) = "client/build/index.html")));
-  });
-}
-//build mode
-app.get("*", (req, res) => {
-  res.sendFile(path.join(path.dirname(__filename) + "/client/public/index.html"));
-});
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(path.dirname(__filename), "client/build")));
+//   //
+//   app.get("*", (req, res) => {
+//     res.sendfile(path.join((path.dirname(__filename) = "client/build/index.html")));
+//   });
+// }
+// //build mode
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(path.dirname(__filename) + "/client/public/index.html"));
+// });
 
 app.use("/", router);
 
