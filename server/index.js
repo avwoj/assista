@@ -5,6 +5,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import router from "./routes/index.js";
 import dotenv from "dotenv";
+import * as path from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 dotenv.config();
@@ -13,18 +15,20 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "client/build")));
+const __filename = fileURLToPath(import.meta.url);
+
+app.use(express.static(path.join(path.dirname(__filename), "client/build")));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
+  app.use(express.static(path.join(path.dirname(__filename), "client/build")));
   //
   app.get("*", (req, res) => {
-    res.sendfile(path.join((__dirname = "client/build/index.html")));
+    res.sendfile(path.join((path.dirname(__filename) = "client/build/index.html")));
   });
 }
 //build mode
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/public/index.html"));
+  res.sendFile(path.join(path.dirname(__filename) + "/client/public/index.html"));
 });
 
 app.use("/", router);
