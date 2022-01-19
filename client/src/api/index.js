@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:5000" });
+const API = axios.create({
+  baseURL: "https://kenzie-capstone-assista.herokuapp.com",
+});
+// https://kenzie-capstone-assista.herokuapp.com/
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
@@ -27,8 +30,11 @@ export const signUp = (formData) => API.post("/user/signup", formData);
 //Journal calls
 export const getJournal = (userId, date) =>
   API.get(`/journal/${userId}`, { params: { date: date } });
+
 export const writeJournal = (newJournalEntry) =>
   API.post(`/journal/${newJournalEntry.author}`, newJournalEntry);
+
+
 
 //Todo API calls
 export const getTodo = (userId) => API.get(`/todo/${userId}`);
