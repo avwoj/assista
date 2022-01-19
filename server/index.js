@@ -13,6 +13,20 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
+app.use(express.static(path.join(__dirname, "client/build")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+  //
+  app.get("*", (req, res) => {
+    res.sendfile(path.join((__dirname = "client/build/index.html")));
+  });
+}
+//build mode
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/public/index.html"));
+});
+
 app.use("/", router);
 
 const CONNECTION_URL = process.env.CONNECTION_URL;
