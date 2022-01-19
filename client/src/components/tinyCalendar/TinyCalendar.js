@@ -2,20 +2,24 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./tinyCalendar.css";
+import { useDispatch } from "react-redux";
 
-function TinyCalendar() {
-  const [value, setDate] = useState(new Date());
+function TinyCalendar({theDate, setTheDate, user,  getJournal}) {
+  const [value, setDate] = useState("")
+  const dispatch = useDispatch()
+  
+  const handleChange = (date) => {
+    setDate(date)
+    setTheDate(date.toLocaleDateString())
 
-  useEffect(() => {
-    console.log(value);
-    console.log("toLocaleString: " + value.toLocaleString());
-    console.log("toLocaleDateString: " + value.toLocaleDateString());
-    console.log("toDateString: " + value.toDateString());
-  }, [value]);
+    dispatch(
+      getJournal(user?.result?._id, date.toLocaleDateString())
+    )
+  }
 
   return (
     <div className="tiny">
-      <DatePicker onChange={setDate} value={value} />
+      <DatePicker onChange={handleChange} />
     </div>
   );
 }

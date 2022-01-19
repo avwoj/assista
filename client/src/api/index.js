@@ -24,7 +24,15 @@ export const deleteEvent = (id) => API.delete(`/calendar/${id}`);
 export const signIn = (formData) => API.post("/user/signin", formData);
 export const signUp = (formData) => API.post("/user/signup", formData);
 
+
 //Journal calls
-export const getJournal = (userId) => API.get(`/journal/${userId}`);
+export const getJournal = (userId, date) => API.get(`/journal/${userId}`, {params: {date:date}});
 export const writeJournal = (newJournalEntry, userId) =>
   API.post(`/journal/${userId}`, newJournalEntry);
+
+//Todo API calls
+export const getTodo = (userId) => API.get(`/todo/${userId}`);
+export const makeTodo = (newTodo, userId) =>
+  API.post(`/todo/${userId}`, newTodo);
+export const updateTodo = (id, updatedTodo) =>
+  API.patch(`/todo/${id}`, updatedTodo);

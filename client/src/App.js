@@ -19,7 +19,7 @@ function App() {
     <div className="App">
       <Navigation />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={!user ? <Home /> : <Calendar />} />
         <Route path="/user" element={<User />} />
         <Route path="/calendar" element={user ? <Calendar /> : <Home />} />
         <Route path="/journal" element={user ? <Journal /> : <Home />} />

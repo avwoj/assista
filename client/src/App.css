@@ -64,6 +64,12 @@
   }
 } */
 
+@media (max-width: 670px) {
+  .pro-sidebar {
+    width: 100vw !important;
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

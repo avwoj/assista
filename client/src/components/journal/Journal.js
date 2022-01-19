@@ -8,6 +8,7 @@ import {
   IconButton,
   Collapse,
 } from "@material-ui/core";
+import { useLocation } from "react-router-dom";
 import ClearIcon from "@material-ui/icons/Clear";
 import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
@@ -135,14 +136,11 @@ const Journal = (prop) => {
   const [value, setValue] = useState("");
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [toggle, setToggle] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
-  const journalEntries = useSelector((state) => state.journalEntries);
+  const [theDate, setTheDate] = useState(new Date().toLocaleDateString());
+  const journal = useSelector((state) => state.journal);
   const dispatch = useDispatch();
-
-  const triggerToggle = () => {
-    setToggle(!toggle);
-  };
+  const location = useLocation();
 
   const classes = useStyle();
   const handleClose = () => setShow(false);
@@ -167,19 +165,18 @@ const Journal = (prop) => {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
-
     dispatch(getJournal(user?.result?._id));
-    console.log(journalEntries);
   }, [dispatch]);
 
   const handleJournal = () => {
     dispatch(
       writeJournal(
-        { text: value, author: user?.result?._id },
+        { date: theDate, text: value, author: user?.result?._id },
         user?.result?._id
       )
     );
     setValue("");
+    setShow(false);
   };
 
   return (
@@ -204,7 +201,7 @@ const Journal = (prop) => {
               setValue(e.target.value);
             }}
             cols="30"
-            rows="15"
+            rows="14"
             placeholder="List three things you're grateful for:"
           />
           <Button
@@ -214,17 +211,33 @@ const Journal = (prop) => {
           >
             Submit
           </Button>
-          <Button onClick={handleRemove}>Reset</Button>
-          <div>
-            <div />
-            {value}
-          </div>
+          <Button onClick={(e) => dispatch(getJournal(user?.result?._id))}>
+            Reset
+          </Button>
+
+          {journal &&
+            journal.map((entry, index) => {
+              if (entry.date === theDate) {
+                return (
+                  <div className="journalEntries" key={entry.text + index}>
+                    {entry.date} : {entry.text}
+                  </div>
+                );
+              }
+              return null;
+            })}
         </form>
-        <div className={classes.calendar}>
-          {show2 === true ? <TinyCalendar /> : null}
+        {/* <div className={classes.calendar}> */}
+        <div className="tinyCal">
+          <TinyCalendar
+            theDate={theDate}
+            setTheDate={setTheDate}
+            user={user}
+            getJournal={getJournal}
+          />
         </div>
         <Dialog open={show} onClose={handleClose}>
-          <DialogContent closeButton>
+          <DialogContent>
             <DialogTitle>Journal Entry</DialogTitle> <br />
             <DialogContentText
               className="border border-warning bg-secondary"
@@ -235,28 +248,8 @@ const Journal = (prop) => {
             <DialogContentText>{value}</DialogContentText>
           </DialogContent>
           <Button onClick={handleClose}>Close</Button>
-          <Button onClick={handleClose}>Save changes</Button>
+          <Button onClick={handleJournal}>Save changes</Button>
         </Dialog>
-        <div className={classes.calendarDiv}>
-          <Button
-            className={classes.calendarBtn}
-            onClick={() => {
-              setShow2(true);
-              // classes.calendarBtn["color"] = "white";
-            }}
-          >
-            Tiny Calendar
-          </Button>
-          <Collapse
-            in={show2}
-            className={classes.calendarX}
-            orientation="vertical"
-          >
-            <IconButton onClick={() => setShow2(false)}>
-              <ClearIcon />
-            </IconButton>
-          </Collapse>
-        </div>
       </div>
     </React.Fragment>
   );
