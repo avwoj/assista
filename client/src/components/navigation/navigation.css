@@ -1,6 +1,5 @@
 .nav {
   display: flex;
-  height: 100vh;
   flex-direction: column;
   align-items: center;
   border-right: 2px solid lightgray;
@@ -8,6 +7,7 @@
 .pro-sidebar-layout {
   background-color: rgb(42, 54, 60);
 }
+
 .arrow {
   color: #000;
   position: absolute;

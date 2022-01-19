@@ -1,4 +1,4 @@
-html,
+/* html,
 body {
   background-color: rgb(61, 77, 72);
 }
@@ -7,9 +7,18 @@ body {
   padding: 20px;
   margin: 15px 0;
   background-color: rgb(50, 47, 47);
+} */
+
+.journalEntries {
+  width: calc(100% - 280px);
 }
 
-textarea {
+@media (max-width: 670px) {
+  .journalEntries {
+    width: 100%;
+  }
+}
+/* textarea {
   font-size: 20px;
   width: 100%;
 }
@@ -68,4 +77,4 @@ input.search:focus {
   border: 2px solid rgb(213, 153, 85);
   border-bottom: 3px solid rgb(249, 213, 9);
   background-color: rgb(223, 249, 249);
-}
+} */
