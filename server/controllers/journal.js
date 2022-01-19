@@ -9,7 +9,6 @@ export const getJournal = async (req, res) => {
 
   try {
     const journalEntries = await Journal.find();
-    // console.log(journalEntries);
     const filteredJournalEntries = journalEntries.filter(
       date.length > 0
         ? (entry) =>

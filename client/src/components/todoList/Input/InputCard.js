@@ -44,7 +44,6 @@ export default function InputCard({ setOpen, listId, type }) {
       let todoItem = todoItems.filter((todo) => listId === todo._id)[0];
       let cards = todoItem.cards;
       let newCard = { id: uuid(), title: title };
-      console.log(newCard);
       addMoreCard(title, uuid());
       dispatch(updateTodo(listId, { ...todoItem, cards: [...cards, newCard] }));
       setTitle("");
