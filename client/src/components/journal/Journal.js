@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TinyCalendar from "../tinyCalendar/TinyCalendar";
 import { makeStyles } from "@material-ui/core/styles";
 import { getJournal, writeJournal } from "../../actions/journal";
-import "./Journal.css"
+import "./Journal.css";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -171,10 +171,7 @@ const Journal = (prop) => {
 
   const handleJournal = () => {
     dispatch(
-      writeJournal(
-        { date: theDate, text: value, author: user?.result?._id },
-        user?.result?._id
-      )
+      writeJournal({ date: theDate, text: value, author: user?.result?._id })
     );
     setValue("");
     setShow(false);

@@ -38,7 +38,6 @@ function Calendar() {
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")));
-
     dispatch(getEvents(user?.result?._id));
   }, [dispatch]);
 
@@ -63,7 +62,9 @@ function Calendar() {
   const handleDateSelect = () => {
     let calendarApi = eventInfo.view.calendar;
     calendarApi.unselect(); // clear date selection
+
     if (title) {
+      console.log(user.result._id);
       dispatch(
         createEvent({
           title,
@@ -73,8 +74,7 @@ function Calendar() {
           endStr: eventInfo.endStr,
           allDay: eventInfo.allDay,
           author: user?.result?._id,
-        }),
-        user.result._id
+        })
       );
     }
     setTitle("");
