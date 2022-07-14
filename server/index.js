@@ -32,6 +32,3 @@ mongoose
   )
   .catch((error) => console.log(error.message));
 
-// app.use("/api/calendar", require("./routes/index"));
-
-// mongoose.set("useFindAndModify", false); recommended by tutorial, crashed app so commented it out, just makes sure we don't get warnings in console
